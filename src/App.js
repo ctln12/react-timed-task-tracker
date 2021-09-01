@@ -1,14 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import PublicIcon from '@material-ui/icons/Public';
+import TodoApp from './components/TodoApp';
 
 function App() {
-  return (
-    <Button variant="contained" color="primary">
-      Hello World
-      <PublicIcon />
-    </Button>
-  );
+  return <TodoApp />;
 }
 
 export default App;
