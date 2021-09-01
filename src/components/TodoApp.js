@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Grid, Paper } from '@material-ui/core';
 import TodoList from './TodoList';
+import TodoForm from './TodoForm';
+import { Grid, Paper } from '@material-ui/core';
 
 function TodoApp() {
   const initialTodos = [
@@ -8,13 +9,17 @@ function TodoApp() {
     { id: 2, task: 'Meditate', completed: true },
     { id: 3, task: 'Build first project', completed: false }
   ]
-  const [todos] = useState(initialTodos);
+  const [todos, setTodos] = useState(initialTodos);
+  const addTodo = newTask => {
+    const newTodo = { id: todos[todos.length - 1].id + 1, task: newTask, completed: false };
+    setTodos([...todos, newTodo]);
+  }
   return (
     <Paper elevation={0}>
       <Grid container justifyContent='center'>
         <Grid item xs={11} md={8} lg={4}>
           <TodoList todos={todos} />
-          {/* <TodoForm /> */}
+          <TodoForm addTodo={addTodo} />
         </Grid>
       </Grid>
     </Paper>
