@@ -8,7 +8,7 @@ function TodoApp() {
     { id: 2, task: 'Meditate', completed: true },
     { id: 3, task: 'Build first project', completed: false }
   ]
-  const [todos, setTodos] = useState(initialTodos);
+  const [todos] = useState(initialTodos);
   return (
     <Paper elevation={0}>
       <Grid container justifyContent='center'>
