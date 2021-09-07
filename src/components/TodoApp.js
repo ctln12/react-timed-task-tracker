@@ -25,8 +25,11 @@ function TodoApp() {
     const filteredTodos = todos.filter(todo => todo.id !== todoId);
     setTodos(filteredTodos);
   };
-  const editTodo = todoId => {
-    console.log("EDIT");
+  const editTodo = (todoId, newTask) => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === todoId ? {...todo, task: newTask} : todo
+    );
+    setTodos(updatedTodos);
   };
   return (
     <Paper elevation={0}>
