@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Button, Divider, Paper, TextField, Typography } from '@material-ui/core';
+import { Box, Button, IconButton, Paper, TextField, Typography } from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import useInputState from '../hooks/useInputState';
 
@@ -7,28 +8,27 @@ const useStyles = makeStyles((theme) => ({
   container: {
     padding: '1rem',
   },
-  divider: {
-    width: '70px',
-    height: '4px',
-    borderRadius: '3px',
-    backgroundColor: 'black',
-  }
 }));
 
-function TodoForm({ addTodo }) {
+function TodoForm({ addTodo, toggleIsAdding }) {
   const [value, handleChange, reset] = useInputState('');
   const handleSubmit = e => {
     e.preventDefault();
     addTodo(value);
     reset();
+    if (value === "") {
+      toggleIsAdding()
+    }
   }
   const classes = useStyles();
   return (
-    <Paper className={classes.container}>
-      <Box display='flex' justifyContent='center' marginBottom='1rem'>
-        <Divider flexItem={true} className={classes.divider} />
+    <Paper elevation={2} className={classes.container} style={{transition: '1.5s ease-in-out'}}>
+      <Box display='flex' justifyContent='center' onClick={() => toggleIsAdding()}>
+        <IconButton aria-label="close">
+          <ExpandMore />
+        </IconButton>
       </Box>
-      <Typography gutterBottom variant='h5' align='center'>New task</Typography>
+      <Typography gutterBottom variant='h5' align='center'>Add a new task</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           value={value}
@@ -38,7 +38,7 @@ function TodoForm({ addTodo }) {
           margin='normal'
           fullWidth />
         <Button variant="contained" fullWidth type="submit">
-          Add task
+          Save
         </Button>
       </form>
     </Paper>

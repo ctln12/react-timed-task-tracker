@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import TodoList from './TodoList';
-import TodoForm from './TodoForm';
 import { Grid, Paper } from '@material-ui/core';
+import TodoList from './TodoList';
 
 function TodoApp() {
   const initialTodos = [
@@ -11,6 +10,9 @@ function TodoApp() {
   ]
   const [todos, setTodos] = useState(initialTodos);
   const addTodo = newTask => {
+    if (newTask === "") {
+      return;
+    }
     const newId = todos.length ? todos[todos.length - 1].id + 1 : 1;
     const newTodo = { id: newId, task: newTask, completed: false };
     setTodos([...todos, newTodo]);
@@ -37,11 +39,11 @@ function TodoApp() {
         <Grid item xs={11} md={8} lg={4}>
           <TodoList
             todos={todos}
+            addTodo={addTodo}
             toggleTodo={toggleTodo}
             deleteTodo={deleteTodo}
             editTodo={editTodo}
           />
-          <TodoForm addTodo={addTodo} />
         </Grid>
       </Grid>
     </Paper>
