@@ -25,11 +25,19 @@ function TodoApp() {
     const filteredTodos = todos.filter(todo => todo.id !== todoId);
     setTodos(filteredTodos);
   };
+  const editTodo = todoId => {
+    console.log("EDIT");
+  };
   return (
     <Paper elevation={0}>
       <Grid container justifyContent='center'>
         <Grid item xs={11} md={8} lg={4}>
-          <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+          <TodoList
+            todos={todos}
+            toggleTodo={toggleTodo}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+          />
           <TodoForm addTodo={addTodo} />
         </Grid>
       </Grid>

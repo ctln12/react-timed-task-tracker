@@ -1,8 +1,8 @@
 import React from 'react';
 import { Checkbox, IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Delete, Edit } from '@material-ui/icons';
 
-function TodoItem({ todo, toggleTodo, deleteTodo }) {
+function TodoItem({ todo, toggleTodo, deleteTodo, editTodo }) {
   return (
     <ListItem>
       <ListItemIcon>
@@ -17,6 +17,9 @@ function TodoItem({ todo, toggleTodo, deleteTodo }) {
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" onClick={() => deleteTodo(todo.id)}>
           <Delete />
+        </IconButton>
+        <IconButton edge="end" aria-label="edit" onClick={() => editTodo(todo.id)}>
+          <Edit />
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>

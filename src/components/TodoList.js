@@ -2,7 +2,7 @@ import React from 'react';
 import TodoItem from './TodoItem';
 import { List, Paper, Typography } from '@material-ui/core';
 
-function TodoList({ todos, toggleTodo, deleteTodo }) {
+function TodoList({ todos, toggleTodo, deleteTodo, editTodo }) {
   return (
     <Paper>
       <Typography gutterBottom variant='h3' align='center'>
@@ -10,7 +10,13 @@ function TodoList({ todos, toggleTodo, deleteTodo }) {
       </Typography>
       <List>
         {todos.map(todo => (
-          <TodoItem key={todo.id} todo={todo} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
+          <TodoItem
+            key={todo.id}
+            todo={todo}
+            toggleTodo={toggleTodo}
+            deleteTodo={deleteTodo}
+            editTodo={editTodo}
+          />
         ))}
       </List>
     </Paper>
