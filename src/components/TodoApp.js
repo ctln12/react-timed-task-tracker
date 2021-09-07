@@ -11,14 +11,25 @@ function TodoApp() {
   ]
   const [todos, setTodos] = useState(initialTodos);
   const addTodo = newTask => {
-    const newTodo = { id: todos[todos.length - 1].id + 1, task: newTask, completed: false };
+    const newId = todos.length ? todos[todos.length - 1].id + 1 : 1;
+    const newTodo = { id: newId, task: newTask, completed: false };
     setTodos([...todos, newTodo]);
-  }
+  };
+  const toggleTodo = todoId => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === todoId ? {...todo, completed: !todo.completed} : todo
+    );
+    setTodos(updatedTodos);
+  };
+  const deleteTodo = todoId => {
+    const filteredTodos = todos.filter(todo => todo.id !== todoId);
+    setTodos(filteredTodos);
+  };
   return (
     <Paper elevation={0}>
       <Grid container justifyContent='center'>
         <Grid item xs={11} md={8} lg={4}>
-          <TodoList todos={todos} />
+          <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
           <TodoForm addTodo={addTodo} />
         </Grid>
       </Grid>
