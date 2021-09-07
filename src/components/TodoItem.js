@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
-function TodoItem({ todo }) {
+function TodoItem({ todo, toggleTodo }) {
   return (
     <ListItem>
       <ListItemIcon>
@@ -9,6 +9,7 @@ function TodoItem({ todo }) {
           checked={todo.completed}
           color="default"
           inputProps={{ 'aria-label': 'checkbox with default color' }}
+          onClick={() => toggleTodo(todo.id)}
         />
       </ListItemIcon>
       <ListItemText>{todo.task}</ListItemText>

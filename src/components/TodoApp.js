@@ -13,12 +13,18 @@ function TodoApp() {
   const addTodo = newTask => {
     const newTodo = { id: todos[todos.length - 1].id + 1, task: newTask, completed: false };
     setTodos([...todos, newTodo]);
-  }
+  };
+  const toggleTodo = todoId => {
+    const updatedTodos = todos.map(todo =>
+      todo.id === todoId ? {...todo, completed: !todo.completed} : todo
+    );
+    setTodos(updatedTodos);
+  };
   return (
     <Paper elevation={0}>
       <Grid container justifyContent='center'>
         <Grid item xs={11} md={8} lg={4}>
-          <TodoList todos={todos} />
+          <TodoList todos={todos} toggleTodo={toggleTodo} />
           <TodoForm addTodo={addTodo} />
         </Grid>
       </Grid>
