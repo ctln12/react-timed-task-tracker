@@ -36,6 +36,7 @@ function TodoForm({ addTodo, toggleIsAdding }) {
           label='What do you want to focus on?'
           variant='outlined'
           margin='normal'
+          autoFocus
           fullWidth />
         <Button variant="contained" fullWidth type="submit">
           Save

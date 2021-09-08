@@ -42,6 +42,7 @@ function EditTodoForm({ todo, editTodo, toggleIsEditing }) {
         variant='outlined'
         margin='none'
         size='small'
+        autoFocus
         className={classes.input}
       />
       <Button
