@@ -1,11 +1,19 @@
 import React from 'react';
 import { Checkbox, IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/styles';
 import useToggleState from '../hooks/useToggleState';
 import EditTodoForm from './EditTodoForm';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: '70%',
+  },
+}));
+
 function TodoItem({ todo, toggleTodo, deleteTodo, editTodo }) {
   const [isEditing, toggleIsEditing] = useToggleState();
+  const classes = useStyles();
   return (
     <ListItem>
       {isEditing ?
@@ -20,7 +28,7 @@ function TodoItem({ todo, toggleTodo, deleteTodo, editTodo }) {
               onClick={() => toggleTodo(todo.id)}
             />
           </ListItemIcon>
-          <ListItemText>{todo.task}</ListItemText>
+          <ListItemText classes={{root: classes.root}}>{todo.task}</ListItemText>
           <ListItemSecondaryAction>
             <IconButton edge="end" aria-label="delete" onClick={() => deleteTodo(todo.id)}>
               <Delete />

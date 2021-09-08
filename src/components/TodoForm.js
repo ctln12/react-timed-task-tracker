@@ -22,7 +22,7 @@ function TodoForm({ addTodo, toggleIsAdding }) {
   }
   const classes = useStyles();
   return (
-    <Paper elevation={2} className={classes.container} style={{transition: '1.5s ease-in-out'}}>
+    <Paper elevation={2} className={classes.container}>
       <Box display='flex' justifyContent='center' onClick={() => toggleIsAdding()}>
         <IconButton aria-label="close">
           <ExpandMore />
