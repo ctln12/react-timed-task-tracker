@@ -59,13 +59,18 @@ function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editTodo }) {
 
     toggleIsAdding();
   };
+  const closeDrawer = () => {
+    if (isAdding) {
+      toggleIsAdding();
+    }
+  }
   const classes = useStyles();
   return (
     <Paper className={classes.container}>
       <Typography gutterBottom variant='h3' align='center'>
         All Tasks
       </Typography>
-      <List id="task-list" className={clsx(classes.list, {[classes.collapse]: isAdding})}>
+      <List id="task-list" className={clsx(classes.list, {[classes.collapse]: isAdding})} onClick={() => closeDrawer()}>
         {todos.map(todo => (
           <TodoItem
             key={todo.id}
