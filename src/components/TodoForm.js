@@ -1,22 +1,34 @@
 import React from 'react';
+import { Box, Button, IconButton, Paper, TextField, Typography } from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/styles';
 import useInputState from '../hooks/useInputState';
-import { Box, Button, Divider, Paper, TextField, Typography } from '@material-ui/core';
 
-function TodoForm({ addTodo }) {
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: '1rem',
+  },
+}));
+
+function TodoForm({ addTodo, toggleIsAdding }) {
   const [value, handleChange, reset] = useInputState('');
   const handleSubmit = e => {
     e.preventDefault();
     addTodo(value);
     reset();
+    if (value === "") {
+      toggleIsAdding()
+    }
   }
+  const classes = useStyles();
   return (
-    <Paper style={{padding: '1rem'}}>
-      <div style={{ width: '100%', marginBottom: '1rem' }}>
-        <Box display='flex' justifyContent='center'>
-          <Divider flexItem={true} style={{width: '70px', height: '4px', borderRadius: '3px', backgroundColor: 'black'}} />
-        </Box>
-      </div>
-      <Typography gutterBottom variant='h5' align='center'>New task</Typography>
+    <Paper elevation={2} className={classes.container}>
+      <Box display='flex' justifyContent='center' onClick={() => toggleIsAdding()}>
+        <IconButton aria-label="close">
+          <ExpandMore />
+        </IconButton>
+      </Box>
+      <Typography gutterBottom variant='h5' align='center'>Add a new task</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           value={value}
@@ -24,9 +36,10 @@ function TodoForm({ addTodo }) {
           label='What do you want to focus on?'
           variant='outlined'
           margin='normal'
+          autoFocus
           fullWidth />
         <Button variant="contained" fullWidth type="submit">
-          Add task
+          Save
         </Button>
       </form>
     </Paper>
