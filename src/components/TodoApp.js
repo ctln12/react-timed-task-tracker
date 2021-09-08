@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
 import TodoList from './TodoList';
 import useTodoState from '../hooks/useTodoState';
