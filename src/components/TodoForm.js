@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, IconButton, Paper, TextField, Typography } from '@material-ui/core';
 import { ExpandMore } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import useInputState from '../hooks/useInputState';
 
 const useStyles = makeStyles((theme) => ({

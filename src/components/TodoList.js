@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { Button, Drawer, List, Paper, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
 import useToggleState from '../hooks/useToggleState';

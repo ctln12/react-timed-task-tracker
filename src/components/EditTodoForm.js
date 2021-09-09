@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { Check } from '@material-ui/icons';
 import useInputState from '../hooks/useInputState';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   form: {

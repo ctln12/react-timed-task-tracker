@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import { Delete, Edit } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import useToggleState from '../hooks/useToggleState';
 import EditTodoForm from './EditTodoForm';
 
