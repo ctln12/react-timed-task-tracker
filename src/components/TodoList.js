@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '180px',
   },
   container: {
-    height: '100vh',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'transparent',
