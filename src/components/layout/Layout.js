@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
   gridContainer: {
     height: 'calc(100vh - 64px)',
   },
+  gridItem: {
+    height: '100%',
+  },
 }));
 
 const Layout =({children}) =>{
@@ -16,7 +19,7 @@ const Layout =({children}) =>{
       <Navbar/>
       <main>
         <Grid container justifyContent='center' className={classes.gridContainer}>
-          <Grid item xs={11} sm={8} md={6} lg={4}>
+          <Grid item xs={11} sm={8} md={6} lg={4} className={classes.gridItem}>
             {children}
           </Grid>
         </Grid>
