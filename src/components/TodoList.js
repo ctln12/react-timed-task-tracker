@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import clsx from 'clsx';
-import { Button, Drawer, List, Paper, Typography } from '@material-ui/core';
+import { Button, Drawer, List, Paper } from '@material-ui/core';
+import { ExpandLess } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import useTodoState from '../hooks/useTodoState';
+import useToggleState from '../hooks/useToggleState';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
-import useToggleState from '../hooks/useToggleState';
-import { ExpandLess } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   BackdropProps: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     display: 'flex',
     flexDirection: 'column',
+    backgroundColor: 'transparent',
   },
   list: {
     flexGrow: '1',
@@ -43,7 +45,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editTodo }) {
+function TodoList() {
+  const initialTodos = [
+    { id: 1, task: 'Do yoga', completed: true },
+    { id: 2, task: 'Meditate', completed: true },
+    { id: 3, task: 'Build first project', completed: false }
+  ];
+  const {todos, addTodo, toggleTodo, deleteTodo, editTodo} = useTodoState(initialTodos);
   const [isAdding, toggleIsAdding] = useToggleState(false);
   useEffect(() => {
     const taskList = document.getElementById('task-list');
@@ -66,10 +74,7 @@ function TodoList({ todos, addTodo, toggleTodo, deleteTodo, editTodo }) {
   }
   const classes = useStyles();
   return (
-    <Paper className={classes.container}>
-      <Typography gutterBottom variant='h3' align='center'>
-        All Tasks
-      </Typography>
+    <Paper elevation={0} className={classes.container}>
       <List id="task-list" className={clsx(classes.list, {[classes.collapse]: isAdding})} onClick={() => closeDrawer()}>
         {todos.map(todo => (
           <TodoItem
