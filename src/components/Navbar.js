@@ -3,7 +3,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { Menu, Settings } from '@material-ui/icons';
-import TodoApp from './TodoApp';
+import TodoList from './TodoList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,7 @@ export default function ButtonAppBar() {
             <Switch >
               <Route exact path="/" render={() => <h1>Timer</h1>} children={() => 'Timer'} />
               <Route exact path="/settings" render={() => <h1>Timer Settings</h1>} children={() => 'Settings'} />
-              <Route exact path="/tasks" render={() => <TodoApp />} children={() => 'All tasks'} />
+              <Route exact path="/tasks" render={() => <TodoList />} children={() => 'All tasks'} />
             </Switch>
           </Typography>
           <Link to="/settings" className={classes.settingsLink}>
