@@ -1,34 +1,24 @@
 import React from 'react';
-import { Box, Button, IconButton, Paper, TextField, Typography } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
+import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import useInputState from '../hooks/useInputState';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
+  root: {
     padding: '1rem',
   },
 }));
 
-function TodoForm({ addTodo, toggleIsAdding }) {
+function TodoForm({ addTodo }) {
   const [value, handleChange, reset] = useInputState('');
   const handleSubmit = e => {
     e.preventDefault();
     addTodo(value);
     reset();
-    if (value === "") {
-      toggleIsAdding()
-    }
   }
   const classes = useStyles();
   return (
-    <Paper elevation={2} className={classes.container}>
-      <Box display='flex' justifyContent='center' onClick={() => toggleIsAdding()}>
-        <IconButton aria-label="close">
-          <ExpandMore />
-        </IconButton>
-      </Box>
-      <Typography gutterBottom variant='h5' align='center'>Add a new task</Typography>
+    <div className={classes.root}>
       <form onSubmit={handleSubmit}>
         <TextField
           value={value}
@@ -36,13 +26,11 @@ function TodoForm({ addTodo, toggleIsAdding }) {
           label='What do you want to focus on?'
           variant='outlined'
           margin='normal'
+          size='small'
           autoFocus
           fullWidth />
-        <Button variant="contained" fullWidth type="submit">
-          Save
-        </Button>
       </form>
-    </Paper>
+    </div>
   )
 }
 
