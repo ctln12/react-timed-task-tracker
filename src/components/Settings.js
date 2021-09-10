@@ -54,7 +54,7 @@ function Settings() {
   return (
     <form className={classes.root}>
       {sessions.map(session =>
-        <SelectTime minutes={minutes} session={session} />
+        <SelectTime key={session.id} minutes={minutes} session={session} />
       )}
       <div className={classes.buttons}>
         <Button variant="contained" size="large" className={classes.button}>Save</Button>
