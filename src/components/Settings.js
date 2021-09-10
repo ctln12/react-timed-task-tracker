@@ -45,8 +45,7 @@ function Settings() {
   const [settings, setSettings] = useState(initialSettings);
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSettings(settings);
-    console.log(event.target.value);
+    setSettings({focus: focus, shortBreak: shortBreak, longBreak: longBreak, nbSessions: nbSessions});
   };
 
   const [focus, handleFocusChange] = useInputState(settings.focus);
