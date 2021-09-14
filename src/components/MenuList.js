@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuLink: {
     textDecoration: 'none',
+    color: 'inherit',
   },
   item: {
     padding: theme.spacing(1, 4),
@@ -53,7 +54,12 @@ function MenuList({toggleDrawer}) {
       </div>
       <List>
         {menu.map((item) => (
-          <Link to={item.path} className={classes.menuLink}>
+          <Link
+            key={item.text}
+            to={item.path}
+            onClick={toggleDrawer(false)}
+            className={classes.menuLink}
+          >
             <ListItem button key={item.text} className={classes.item}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
