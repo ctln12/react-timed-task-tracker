@@ -34,14 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Settings() {
+function Settings({ initialSettings }) {
   const classes = useStyles();
-  const initialSettings = {
-    focus: '25',
-    shortBreak: '5',
-    longBreak: '15',
-    nbSessions: '4'
-  };
   const [settings, setSettings] = useState(initialSettings);
   const handleSubmit = (event) => {
     event.preventDefault();
