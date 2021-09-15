@@ -29,6 +29,7 @@ const useTodoState = initialTodos => {
 
   return {
     todos,
+    setTodos,
     addTodo,
     toggleTodo,
     deleteTodo,

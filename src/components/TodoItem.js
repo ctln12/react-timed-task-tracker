@@ -28,7 +28,7 @@ function TodoItem({ todo, toggleTodo, deleteTodo, editTodo }) {
               onClick={() => toggleTodo(todo.id)}
             />
           </ListItemIcon>
-          <ListItemText classes={{root: classes.root}}>{todo.task}</ListItemText>
+          <ListItemText classes={{root: classes.root}}>{todo.name}</ListItemText>
           <ListItemSecondaryAction>
             <IconButton edge="end" aria-label="delete" onClick={() => deleteTodo(todo.id)}>
               <Delete />
