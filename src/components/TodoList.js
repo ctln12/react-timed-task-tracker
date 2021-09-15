@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import useTodoState from '../hooks/useTodoState';
 import TodoItem from './TodoItem';
 import TodoForm from './TodoForm';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -14,18 +15,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function TodoList() {
-  const initialTodos = [
-    { id: 1, task: 'Do yoga', completed: true },
-    { id: 2, task: 'Meditate', completed: true },
-    { id: 3, task: 'Build first project', completed: false }
-  ];
-  const {todos, addTodo, toggleTodo, deleteTodo, editTodo} = useTodoState(initialTodos);
+  const classes = useStyles();
+  const {todos, setTodos, addTodo, toggleTodo, deleteTodo, editTodo} = useTodoState([]);
   useEffect(() => {
     const taskList = document.getElementById('task-list');
-    const lastTask = taskList.children[taskList.children.length - 1];
-    lastTask.scrollIntoView();
+    if (taskList.children.length > 0) {
+      const lastTask = taskList.children[taskList.children.length - 1];
+      lastTask.scrollIntoView();
+    }
   });
-  const classes = useStyles();
+  useEffect(() => {
+    async function getTodos() {
+      const response = await axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks');
+      setTodos(response.data);
+    }
+      getTodos();
+  }, [setTodos]);
   return (
     <Paper elevation={0} className={classes.container}>
       <TodoForm addTodo={addTodo} />
