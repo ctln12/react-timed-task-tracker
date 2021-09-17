@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TodoList() {
   const classes = useStyles();
-  const {todos, setTodos, addTodo, toggleTodo, deleteTodo, editTodo} = useTodoState([]);
+  const {todos, setTodos, addTodo, deleteTodo, editTodo} = useTodoState([]);
   useEffect(() => {
     const taskList = document.getElementById('task-list');
     if (taskList.children.length > 0) {
@@ -39,7 +39,6 @@ function TodoList() {
           <TodoItem
             key={todo.id}
             todo={todo}
-            toggleTodo={toggleTodo}
             deleteTodo={deleteTodo}
             editTodo={editTodo}
           />
