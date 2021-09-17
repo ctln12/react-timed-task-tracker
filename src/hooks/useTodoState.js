@@ -20,8 +20,11 @@ const useTodoState = initialTodos => {
     setTodos(updatedTodos);
   };
   const deleteTodo = todoId => {
-    const filteredTodos = todos.filter(todo => todo.id !== todoId);
-    setTodos(filteredTodos);
+    async function destroyTodo(id) {
+      const response = await axios.delete(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks/${id}`)
+      setTodos(response.data);
+      }
+    destroyTodo(todoId);
   };
   const editTodo = (todoId, newTask) => {
     const updatedTodos = todos.map(todo =>
