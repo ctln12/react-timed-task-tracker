@@ -19,7 +19,7 @@ const useTodoState = initialTodos => {
     async function destroyTodo(id) {
       const response = await axios.delete(`${baseUrl}/${id}`)
       setTodos(response.data);
-      }
+    }
     destroyTodo(todoId);
   };
   const editTodo = (todoId, editedName, editedCompleted) => {
