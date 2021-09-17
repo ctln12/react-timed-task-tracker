@@ -30,7 +30,7 @@ function TodoList() {
       setTodos(response.data);
     }
       getTodos();
-  }, [setTodos]);
+  }, [setTodos, todos]);
   return (
     <Paper elevation={0} className={classes.container}>
       <TodoForm addTodo={addTodo} />
