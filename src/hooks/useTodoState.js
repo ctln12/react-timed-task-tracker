@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const useTodoState = initialTodos => {
   const [todos, setTodos] = useState(initialTodos);
@@ -6,9 +7,11 @@ const useTodoState = initialTodos => {
     if (newTask === "") {
       return;
     }
-    const newId = todos.length ? todos[todos.length - 1].id + 1 : 1;
-    const newTodo = { id: newId, task: newTask, completed: false };
-    setTodos([...todos, newTodo]);
+    async function createTodo(newTask) {
+      const response = await axios.post('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks', { name: newTask });
+      setTodos([...todos, response.data]);
+    }
+    createTodo(newTask);
   };
   const toggleTodo = todoId => {
     const updatedTodos = todos.map(todo =>
