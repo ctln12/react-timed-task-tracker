@@ -13,12 +13,6 @@ const useTodoState = initialTodos => {
     }
     createTodo(newTask);
   };
-  const toggleTodo = todoId => {
-    const updatedTodos = todos.map(todo =>
-      todo.id === todoId ? {...todo, completed: !todo.completed} : todo
-    );
-    setTodos(updatedTodos);
-  };
   const deleteTodo = todoId => {
     async function destroyTodo(id) {
       const response = await axios.delete(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks/${id}`)
@@ -26,18 +20,18 @@ const useTodoState = initialTodos => {
       }
     destroyTodo(todoId);
   };
-  const editTodo = (todoId, newTask) => {
-    const updatedTodos = todos.map(todo =>
-      todo.id === todoId ? {...todo, task: newTask} : todo
-    );
-    setTodos(updatedTodos);
-  };
+  const editTodo = (todoId, editedName, editedCompleted) => {
+		async function updateTodo(id, name, completed) {
+      const response = await axios.put(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks/${id}`,{ name: name, completed: completed });
+      setTodos(response.data);
+    }
+		updateTodo(todoId, editedName, editedCompleted);
+	}
 
   return {
     todos,
     setTodos,
     addTodo,
-    toggleTodo,
     deleteTodo,
     editTodo
   }

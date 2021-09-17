@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function EditTodoForm({ todo, editTodo, toggleIsEditing }) {
-  const [value, handleChange, reset] = useInputState(todo.task);
+  const [value, handleChange, reset] = useInputState(todo.name);
   const handleSubmit = e => {
     e.preventDefault();
-    editTodo(todo.id, value);
+    editTodo(todo.id, value, todo.completed);
     reset();
     toggleIsEditing();
   };

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TodoItem({ todo, toggleTodo, deleteTodo, editTodo }) {
+function TodoItem({ todo, deleteTodo, editTodo }) {
   const [isEditing, toggleIsEditing] = useToggleState();
   const classes = useStyles();
   return (
@@ -25,7 +25,7 @@ function TodoItem({ todo, toggleTodo, deleteTodo, editTodo }) {
               checked={todo.completed}
               color="default"
               aria-label="checkbox"
-              onClick={() => toggleTodo(todo.id)}
+              onClick={() => editTodo(todo.id, todo.name, !todo.completed)}
             />
           </ListItemIcon>
           <ListItemText classes={{root: classes.root}}>{todo.name}</ListItemText>
