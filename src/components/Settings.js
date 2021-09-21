@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, MenuItem, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -34,9 +34,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Settings({ initialSettings }) {
+function Settings({ settings, setSettings }) {
   const classes = useStyles();
-  const [settings, setSettings] = useState(initialSettings);
   const [focus, handleFocusChange] = useInputState(settings.focus);
   const [shortBreak, handleShortBreakChange] = useInputState(settings.shortBreak);
   const [longBreak, handleLongBreakChange] = useInputState(settings.longBreak);

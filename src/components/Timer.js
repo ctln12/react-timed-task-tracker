@@ -23,10 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Timer({ initialStartTime }) {
+function Timer({ startTime }) {
   const classes = useStyles();
   const initialTimerSettings = {
-    startTime: initialStartTime * 60,
+    startTime: startTime * 60,
     isPlaying: false,
     key: 0
   };

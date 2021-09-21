@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Timer from './components/Timer';
@@ -12,16 +12,17 @@ function App() {
     longBreak: '15',
     nbSessions: '4'
   };
+  const [settings, setSettings] = useState(initialSettings);
   return (
     <Layout>
       <Switch >
         <Route
           exact path="/"
-          render={() => <Timer initialStartTime={initialSettings.focus} />}
+          render={() => <Timer startTime={settings.focus} />}
         />
         <Route
           exact path="/settings"
-          render={() => <Settings initialSettings={initialSettings} />}
+          render={() => <Settings settings={settings} setSettings={setSettings} />}
         />
         <Route exact path="/tasks" render={() => <TodoList />} />
       </Switch>
