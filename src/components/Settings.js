@@ -2,15 +2,14 @@ import React from 'react';
 import { Button, MenuItem, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import useInputState from '../hooks/useInputState';
 
 const numbers = Array.from({length: 120}, (_, i) => i + 1);
 const minutes = numbers.map(number => ({
-  value: `${number}`,
+  value: number,
   label: number === 1 ? `${number} minute` : `${number} minutes`
 }));
 const sessions = numbers.map(number => ({
-  value: `${number}`,
+  value: number,
   label: number === 1 ? `${number} session` : `${number} sessions`
 }));
 
@@ -34,12 +33,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Settings({ settings, setSettings }) {
+function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLongBreak, nbSessions, setNbSessions, setSettings }) {
   const classes = useStyles();
-  const [focus, handleFocusChange] = useInputState(settings.focus);
-  const [shortBreak, handleShortBreakChange] = useInputState(settings.shortBreak);
-  const [longBreak, handleLongBreakChange] = useInputState(settings.longBreak);
-  const [nbSessions, handleNbSessionsChange] = useInputState(settings.nbSessions);
+  const handleFocusChange = e => {
+    setFocus(e.target.value);
+  };
+  const handleShortBreakChange = e => {
+    setShortBreak(e.target.value);
+  };
+  const handleLongBreakChange = e => {
+    setLongBreak(e.target.value);
+  };
+  const handleNbSessionsChange = e => {
+    setNbSessions(e.target.value);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     setSettings({focus: focus, shortBreak: shortBreak, longBreak: longBreak, nbSessions: nbSessions});
