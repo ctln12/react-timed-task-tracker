@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 
-const useTimerState = (initialTimerSettings) => {
+const useTimerState = (timerSettings, setTimerSettings) => {
   const children = ({ remainingTime }) => {
     let minutes = Math.floor(remainingTime / 60);
     let seconds = remainingTime % 60;
@@ -18,13 +17,12 @@ const useTimerState = (initialTimerSettings) => {
       <Typography variant="h4">{children({ remainingTime })}</Typography>
     );
   };
-  const [timerSettings, setTimerSettings] = useState(initialTimerSettings);
   const toggleIsPlaying = () => {
     setTimerSettings({ ...timerSettings, isPlaying: !timerSettings.isPlaying })
   };
   const stopTimer = () => {
     setTimerSettings({
-      startTime: initialTimerSettings.startTime,
+      startTime: timerSettings.startTime,
       isPlaying: false,
       key: timerSettings.key + 1
     });
@@ -37,7 +35,6 @@ const useTimerState = (initialTimerSettings) => {
 
   return {
     renderTime,
-    timerSettings,
     toggleIsPlaying,
     stopTimer,
     playSound
