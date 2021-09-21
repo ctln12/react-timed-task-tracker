@@ -7,7 +7,6 @@ import TodoList from './components/TodoList';
 import axios from 'axios';
 
 function App() {
-  const [settings, setSettings] = useState(null);
   const [timer, setTimer] = useState(null);
   const [focus, setFocus] = useState('');
   const [shortBreak, setShortBreak] = useState('');
@@ -16,7 +15,6 @@ function App() {
   useEffect(() => {
     async function getSettings() {
       const response = await axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1');
-      setSettings({focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions});
       setTimer({startTime: response.data.focus_time * 60, isPlaying: false, key: 0});
       setFocus(response.data.focus_time);
       setShortBreak(response.data.short_break);
@@ -30,11 +28,11 @@ function App() {
       <Switch >
         <Route
           exact path="/"
-          render={() => settings && <Timer timer={timer} setTimer={setTimer} />}
+          render={() => focus && <Timer timer={timer} setTimer={setTimer} />}
         />
         <Route
           exact path="/settings"
-          render={() => settings && <Settings focus={focus} setFocus={setFocus} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} nbSessions={nbSessions} setNbSessions={setNbSessions} setSettings={setSettings} />}
+          render={() => focus && <Settings focus={focus} setFocus={setFocus} shortBreak={shortBreak} setShortBreak={setShortBreak} longBreak={longBreak} setLongBreak={setLongBreak} nbSessions={nbSessions} setNbSessions={setNbSessions} setTimer={setTimer} />}
         />
         <Route exact path="/tasks" render={() => <TodoList />} />
       </Switch>
