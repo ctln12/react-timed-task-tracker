@@ -37,15 +37,14 @@ const useStyles = makeStyles((theme) => ({
 function Settings({ initialSettings }) {
   const classes = useStyles();
   const [settings, setSettings] = useState(initialSettings);
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setSettings({focus: focus, shortBreak: shortBreak, longBreak: longBreak, nbSessions: nbSessions});
-  };
-
   const [focus, handleFocusChange] = useInputState(settings.focus);
   const [shortBreak, handleShortBreakChange] = useInputState(settings.shortBreak);
   const [longBreak, handleLongBreakChange] = useInputState(settings.longBreak);
   const [nbSessions, handleNbSessionsChange] = useInputState(settings.nbSessions);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSettings({focus: focus, shortBreak: shortBreak, longBreak: longBreak, nbSessions: nbSessions});
+  };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
