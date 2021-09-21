@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, MenuItem, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const numbers = Array.from({length: 120}, (_, i) => i + 1);
 const minutes = numbers.map(number => ({
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLongBreak, nbSessions, setNbSessions, setSettings }) {
+function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLongBreak, nbSessions, setNbSessions, setTimer }) {
   const classes = useStyles();
   const handleFocusChange = e => {
     setFocus(e.target.value);
@@ -49,7 +50,19 @@ function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLo
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSettings({focus: focus, shortBreak: shortBreak, longBreak: longBreak, nbSessions: nbSessions});
+    async function updateSettings() {
+			const response = await axios.put(
+				'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
+				{ focus_time: focus, short_break: shortBreak,
+					long_break: longBreak, number_sessions: nbSessions }
+			);
+      setTimer({startTime: response.data.focus_time * 60, isPlaying: false, key: 0});
+      setFocus(response.data.focus_time);
+      setShortBreak(response.data.short_break);
+      setLongBreak(response.data.long_break);
+      setNbSessions(response.data.number_sessions);
+		}
+		updateSettings();
   };
 
   return (
