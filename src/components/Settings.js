@@ -51,7 +51,7 @@ function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLo
   const handleSubmit = (event) => {
     event.preventDefault();
     async function updateSettings() {
-			const response = axios.put(
+			const response = await axios.put(
 				'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
 				{ focus_time: focus, short_break: shortBreak,
 					long_break: longBreak, number_sessions: nbSessions }
