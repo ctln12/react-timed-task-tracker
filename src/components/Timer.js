@@ -23,24 +23,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Timer({ initialStartTime }) {
+function Timer({ timer, setTimer }) {
   const classes = useStyles();
-  const initialTimerSettings = {
-    startTime: initialStartTime * 60,
-    isPlaying: false,
-    key: 0
-  };
-  const {renderTime, timerSettings, toggleIsPlaying, stopTimer, playSound} = useTimerState(initialTimerSettings);
+  const {renderTime, toggleIsPlaying, stopTimer, playSound} = useTimerState(timer, setTimer);
   return (
     <div className={classes.root}>
-      <Typography gutterBottom={true} variant="h5" align="center">
-        {timerSettings.isPlaying ? 'Focusing...' : "Let's get to work!"}
-      </Typography>
+      {timer && <Typography gutterBottom={true} variant="h5" align="center">
+        {timer.isPlaying ? 'Focusing...' : "Let's get to work!"}
+      </Typography>}
       <div>
-        <CountdownCircleTimer
-          key={timerSettings.key}
-          duration={timerSettings.startTime}
-          isPlaying={timerSettings.isPlaying}
+        {timer && <CountdownCircleTimer
+          key={timer.key}
+          duration={timer.startTime}
+          isPlaying={timer.isPlaying}
           onComplete={playSound}
           colors="#A5A5A5"
           size={240}
@@ -48,12 +43,12 @@ function Timer({ initialStartTime }) {
           ariaLabel="count down timer"
         >
           {renderTime}
-        </CountdownCircleTimer>
+        </CountdownCircleTimer>}
       </div>
       <div className={classes.buttons}>
-        <Button variant="contained" size="large" onClick={toggleIsPlaying}>
-          {timerSettings.isPlaying ? 'Pause' : 'Start'}
-        </Button>
+        {timer && <Button variant="contained" size="large" onClick={toggleIsPlaying}>
+          {timer.isPlaying ? 'Pause' : 'Start'}
+        </Button>}
         <Button variant="contained" size="large" onClick={stopTimer}>Stop</Button>
       </div>
     </div>
