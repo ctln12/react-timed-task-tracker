@@ -34,33 +34,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLongBreak, nbSessions, setNbSessions, setTimer }) {
+function Settings({ settings, setSettings }) {
   const classes = useStyles();
-  const handleFocusChange = e => {
-    setFocus(e.target.value);
-  };
-  const handleShortBreakChange = e => {
-    setShortBreak(e.target.value);
-  };
-  const handleLongBreakChange = e => {
-    setLongBreak(e.target.value);
-  };
-  const handleNbSessionsChange = e => {
-    setNbSessions(e.target.value);
-  };
   const handleSubmit = (event) => {
     event.preventDefault();
     async function updateSettings() {
+			// const response = await axios.put(
+			// 	'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
+			// 	{ focus_time: focus, short_break: shortBreak,
+			// 		long_break: longBreak, number_sessions: nbSessions }
+			// );
 			const response = await axios.put(
-				'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
-				{ focus_time: focus, short_break: shortBreak,
-					long_break: longBreak, number_sessions: nbSessions }
+				'http://localhost:3000/api/v1/settings/1',
+				{ focus_time: settings.focus, short_break: settings.shortBreak,
+					long_break: settings.longBreak, number_sessions: settings.nbSessions }
 			);
-      setTimer({startTime: response.data.focus_time * 60, isPlaying: false, key: 0});
-      setFocus(response.data.focus_time);
-      setShortBreak(response.data.short_break);
-      setLongBreak(response.data.long_break);
-      setNbSessions(response.data.number_sessions);
+        if (!settings.focusing && settings.focusCount % settings.nbSessions === 0) {
+        const newDuration = settings.focusing ? response.data.focus_time : response.data.long_break;
+        setSettings({...settings, focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: newDuration});
+      } else {
+        const newDuration = settings.focusing ? response.data.focus_time : response.data.short_break;
+        setSettings({...settings, focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: newDuration});
+      }
 		}
 		updateSettings();
   };
@@ -73,8 +68,8 @@ function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLo
         variant="outlined"
         select
         fullWidth
-        value={focus}
-        onChange={handleFocusChange}
+        value={settings.focus}
+        onChange={e => setSettings({...settings, focus: e.target.value})}
         className={classes.select}
       >
         {minutes.map((option) => (
@@ -89,8 +84,8 @@ function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLo
         variant="outlined"
         select
         fullWidth
-        value={shortBreak}
-        onChange={handleShortBreakChange}
+        value={settings.shortBreak}
+        onChange={e => setSettings({...settings, shortBreak: e.target.value})}
         className={classes.select}
       >
         {minutes.map((option) => (
@@ -105,8 +100,8 @@ function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLo
         variant="outlined"
         select
         fullWidth
-        value={longBreak}
-        onChange={handleLongBreakChange}
+        value={settings.longBreak}
+        onChange={e => setSettings({...settings, longBreak: e.target.value})}
         className={classes.select}
       >
         {minutes.map((option) => (
@@ -121,8 +116,8 @@ function Settings({ focus, setFocus, shortBreak, setShortBreak, longBreak, setLo
         variant="outlined"
         select
         fullWidth
-        value={nbSessions}
-        onChange={handleNbSessionsChange}
+        value={settings.nbSessions}
+        onChange={e => setSettings({...settings, nbSessions: e.target.value})}
         className={classes.select}
       >
         {sessions.map((option) => (

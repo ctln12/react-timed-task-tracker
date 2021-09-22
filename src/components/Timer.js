@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import useTimerState from '../hooks/useTimerState';
+// import useTimerState from '../hooks/useTimerState';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,32 +23,91 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Timer({ timer, setTimer }) {
+function Timer({ settings, setSettings }) {
   const classes = useStyles();
-  const {renderTime, toggleIsPlaying, stopTimer, playSound} = useTimerState(timer, setTimer);
+  // const {renderTime, toggleIsPlaying, stopTimer, playSound} = useTimerState(timer, setTimer);
+  const children = ({ remainingTime }) => {
+    let minutes = Math.floor(remainingTime / 60);
+    let seconds = remainingTime % 60;
+    if (minutes < 10) {
+      minutes = `0${minutes}`;
+    }
+    if (seconds < 10) {
+      seconds = `0${seconds}`;
+    }
+    return `${minutes}:${seconds}`;
+  };
+  const renderTime = ({ remainingTime }) => {
+    return (
+      <Typography variant="h4">{children({ remainingTime })}</Typography>
+    );
+  };
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [key, setKey] = useState(0);
+  const message = () => {
+    if (settings.focusing) {
+      if (isPlaying) {
+        return 'Focusing...';
+      } else {
+        return "Let's get to work!";
+      }
+    } else {
+      if (isPlaying) {
+        return 'Relaxing...';
+      } else {
+        return "Let's take a break!";
+      }
+    }
+  };
+  const stopTimer = () => {
+    setIsPlaying(false);
+    setKey(key + 1);
+    console.log("Stop timer -> OK!");
+  };
+  const playSound = () => {
+    const stopGong = new Audio('/stop_gong.mp3');
+    stopGong.play();
+    console.log("Play sound -> OK!");
+  };
+  const handleComplete = () => {
+    playSound();
+    if (settings.focusing && settings.focusCount % settings.nbSessions === settings.nbSessions - 1) {
+      const newDuration = settings.focusing ? settings.longBreak : settings.focus;
+      const newCount = settings.focusing ? settings.focusCount + 1 : settings.focusCount;
+      setSettings({...settings, duration: newDuration, focusing: !settings.focusing, focusCount: newCount});
+    } else {
+      const newDuration = settings.focusing ? settings.shortBreak : settings.focus;
+      const newCount = settings.focusing ? settings.focusCount + 1 : settings.focusCount;
+      setSettings({...settings, duration: newDuration, focusing: !settings.focusing, focusCount: newCount});
+    }
+    stopTimer();
+    console.log("Countdown complete!");
+  };
+
+
   return (
     <div className={classes.root}>
-      {timer && <Typography gutterBottom={true} variant="h5" align="center">
-        {timer.isPlaying ? 'Focusing...' : "Let's get to work!"}
-      </Typography>}
+      <Typography gutterBottom={true} variant="h5" align="center">
+        {message()}
+      </Typography>
       <div>
-        {timer && <CountdownCircleTimer
-          key={timer.key}
-          duration={timer.startTime}
-          isPlaying={timer.isPlaying}
-          onComplete={playSound}
+        <CountdownCircleTimer
+          key={key}
+          duration={settings.duration * 60}
+          isPlaying={isPlaying}
+          onComplete={handleComplete}
           colors="#A5A5A5"
           size={240}
           strokeWidth={12}
           ariaLabel="count down timer"
         >
           {renderTime}
-        </CountdownCircleTimer>}
+        </CountdownCircleTimer>
       </div>
       <div className={classes.buttons}>
-        {timer && <Button variant="contained" size="large" onClick={toggleIsPlaying}>
-          {timer.isPlaying ? 'Pause' : 'Start'}
-        </Button>}
+        <Button variant="contained" size="large" onClick={() => setIsPlaying(!isPlaying)}>
+          {isPlaying ? 'Pause' : 'Start'}
+        </Button>
         <Button variant="contained" size="large" onClick={stopTimer}>Stop</Button>
       </div>
     </div>
