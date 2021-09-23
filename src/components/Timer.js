@@ -30,8 +30,8 @@ function Timer({ settings, setSettings }) {
   const handleComplete = () => {
     playSound();
     const newDuration = getDuration();
-    const newCount = settings.focusing ? settings.focusCount + 1 : settings.focusCount;
-    setSettings({...settings, duration: newDuration, focusing: !settings.focusing, focusCount: newCount});
+    const newCount = settings.focusing ? settings.sessionCount + 1 : settings.sessionCount;
+    setSettings({...settings, duration: newDuration, focusing: !settings.focusing, sessionCount: newCount});
     stopTimer();
   };
 

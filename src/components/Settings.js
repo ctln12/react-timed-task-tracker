@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 function Settings({ settings, setSettings }) {
   const classes = useStyles();
   const getDuration = (response) => {
-    if (!settings.focusing && settings.focusCount % settings.nbSessions === 0) {
+    if (!settings.focusing && settings.sessionCount % settings.nbSessions === 0) {
       return response.data.long_break;
     } else {
       return settings.focusing ? response.data.focus_time : response.data.short_break;

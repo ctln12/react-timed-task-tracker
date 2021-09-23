@@ -30,7 +30,7 @@ const useTimerState = (settings) => {
     stopGong.play();
   };
   const getDuration = () => {
-    if (settings.focusing && settings.focusCount % settings.nbSessions === settings.nbSessions - 1) {
+    if (settings.focusing && settings.sessionCount % settings.nbSessions === settings.nbSessions - 1) {
       return settings.longBreak;
     } else {
       return settings.focusing ? settings.shortBreak : settings.focus;
