@@ -36,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
 
 function Settings({ settings, setSettings }) {
   const classes = useStyles();
+  const getDuration = (response) => {
+    if (!settings.focusing && settings.focusCount % settings.nbSessions === 0) {
+      return response.data.long_break;
+    } else {
+      return settings.focusing ? response.data.focus_time : response.data.short_break;
+    }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     async function updateSettings() {
@@ -49,13 +56,8 @@ function Settings({ settings, setSettings }) {
 				{ focus_time: settings.focus, short_break: settings.shortBreak,
 					long_break: settings.longBreak, number_sessions: settings.nbSessions }
 			);
-        if (!settings.focusing && settings.focusCount % settings.nbSessions === 0) {
-        const newDuration = settings.focusing ? response.data.focus_time : response.data.long_break;
-        setSettings({...settings, focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: newDuration});
-      } else {
-        const newDuration = settings.focusing ? response.data.focus_time : response.data.short_break;
-        setSettings({...settings, focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: newDuration});
-      }
+      const newDuration = getDuration(response);
+      setSettings({...settings, focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: newDuration});
 		}
 		updateSettings();
   };

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-// import useTimerState from '../hooks/useTimerState';
+import useTimerState from '../hooks/useTimerState';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,70 +25,20 @@ const useStyles = makeStyles((theme) => ({
 
 function Timer({ settings, setSettings }) {
   const classes = useStyles();
-  // const {renderTime, toggleIsPlaying, stopTimer, playSound} = useTimerState(timer, setTimer);
-  const children = ({ remainingTime }) => {
-    let minutes = Math.floor(remainingTime / 60);
-    let seconds = remainingTime % 60;
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-    if (seconds < 10) {
-      seconds = `0${seconds}`;
-    }
-    return `${minutes}:${seconds}`;
-  };
-  const renderTime = ({ remainingTime }) => {
-    return (
-      <Typography variant="h4">{children({ remainingTime })}</Typography>
-    );
-  };
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [key, setKey] = useState(0);
-  const message = () => {
-    if (settings.focusing) {
-      if (isPlaying) {
-        return 'Focusing...';
-      } else {
-        return "Let's get to work!";
-      }
-    } else {
-      if (isPlaying) {
-        return 'Relaxing...';
-      } else {
-        return "Let's take a break!";
-      }
-    }
-  };
-  const stopTimer = () => {
-    setIsPlaying(false);
-    setKey(key + 1);
-    console.log("Stop timer -> OK!");
-  };
-  const playSound = () => {
-    const stopGong = new Audio('/stop_gong.mp3');
-    stopGong.play();
-    console.log("Play sound -> OK!");
-  };
+  const {key, isPlaying, setIsPlaying, renderTime, stopTimer, playSound, getDuration, getMessage} = useTimerState(settings);
+  const message = getMessage();
   const handleComplete = () => {
     playSound();
-    if (settings.focusing && settings.focusCount % settings.nbSessions === settings.nbSessions - 1) {
-      const newDuration = settings.focusing ? settings.longBreak : settings.focus;
-      const newCount = settings.focusing ? settings.focusCount + 1 : settings.focusCount;
-      setSettings({...settings, duration: newDuration, focusing: !settings.focusing, focusCount: newCount});
-    } else {
-      const newDuration = settings.focusing ? settings.shortBreak : settings.focus;
-      const newCount = settings.focusing ? settings.focusCount + 1 : settings.focusCount;
-      setSettings({...settings, duration: newDuration, focusing: !settings.focusing, focusCount: newCount});
-    }
+    const newDuration = getDuration();
+    const newCount = settings.focusing ? settings.focusCount + 1 : settings.focusCount;
+    setSettings({...settings, duration: newDuration, focusing: !settings.focusing, focusCount: newCount});
     stopTimer();
-    console.log("Countdown complete!");
   };
-
 
   return (
     <div className={classes.root}>
       <Typography gutterBottom={true} variant="h5" align="center">
-        {message()}
+        {message}
       </Typography>
       <div>
         <CountdownCircleTimer
