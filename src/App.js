@@ -12,7 +12,7 @@ function App() {
     async function getSettings() {
       // const response = await axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1');
       const response = await axios.get('http://localhost:3000/api/v1/settings/1');
-      setSettings({focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: response.data.focus_time, focusing: true, sessionCount: 0})
+      setSettings({focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: response.data.duration, focusing: response.data.focusing, sessionCount: response.data.session_count})
     }
     getSettings();
   }, []);

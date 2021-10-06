@@ -3,6 +3,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import useTimerState from '../hooks/useTimerState';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +30,21 @@ function Timer({ settings, setSettings }) {
   const message = getMessage();
   const handleComplete = () => {
     playSound();
-    const newDuration = getDuration();
-    const newCount = settings.focusing ? settings.sessionCount + 1 : settings.sessionCount;
-    setSettings({...settings, duration: newDuration, focusing: !settings.focusing, sessionCount: newCount});
-    stopTimer();
+    async function updateSettings() {
+      // const response = await axios.put(
+      //  'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
+      // 	{ duration: newDuration, focusing: !settings.focusing, session_count: newCount }
+      // );
+      const newDuration = getDuration();
+      const newCount = settings.focusing ? settings.sessionCount + 1 : settings.sessionCount;
+			const response = await axios.put(
+				'http://localhost:3000/api/v1/settings/1',
+				{ duration: newDuration, focusing: !settings.focusing, session_count: newCount }
+      );
+      setSettings({...settings, duration: response.data.duration, focusing: response.data.focusing, sessionCount: response.data.session_count});
+      stopTimer();
+    }
+    updateSettings();
   };
 
   return (

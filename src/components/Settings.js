@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Settings({ settings, setSettings }) {
   const classes = useStyles();
-  const getDuration = (response) => {
+  const getDuration = () => {
     if (!settings.focusing && settings.sessionCount % settings.nbSessions === 0) {
-      return response.data.long_break;
+      return settings.longBreak;
     } else {
-      return settings.focusing ? response.data.focus_time : response.data.short_break;
+      return settings.focusing ? settings.focus : settings.shortBreak;
     }
   };
   const handleSubmit = (event) => {
@@ -48,16 +48,18 @@ function Settings({ settings, setSettings }) {
     async function updateSettings() {
 			// const response = await axios.put(
 			// 	'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
-			// 	{ focus_time: focus, short_break: shortBreak,
-			// 		long_break: longBreak, number_sessions: nbSessions }
+			// 	{ focus_time: settings.focus, short_break: settings.shortBreak,
+      //  long_break: settings.longBreak, number_sessions: settings.nbSessions,
+      //  duration: newDuration, focusing: settings.focusing, session_count: settings.sessionCount }
 			// );
+      const newDuration = getDuration();
 			const response = await axios.put(
 				'http://localhost:3000/api/v1/settings/1',
 				{ focus_time: settings.focus, short_break: settings.shortBreak,
-					long_break: settings.longBreak, number_sessions: settings.nbSessions }
+					long_break: settings.longBreak, number_sessions: settings.nbSessions,
+          duration: newDuration, focusing: settings.focusing, session_count: settings.sessionCount }
 			);
-      const newDuration = getDuration(response);
-      setSettings({...settings, focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: newDuration});
+      setSettings({focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: response.data.duration, focusing: response.data.focusing, sessionCount: response.data.session_count});
 		}
 		updateSettings();
   };
