@@ -31,14 +31,11 @@ function Timer({ settings, setSettings }) {
   const handleComplete = () => {
     playSound();
     async function updateSettings() {
-      // const response = await axios.put(
-      //  'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
-      // 	{ duration: newDuration, focusing: !settings.focusing, session_count: newCount }
-      // );
       const newDuration = getDuration();
       const newCount = settings.focusing ? settings.sessionCount + 1 : settings.sessionCount;
-			const response = await axios.put(
-				'http://localhost:3000/api/v1/settings/1',
+        const response = await axios.put(
+         'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
+				// 'http://localhost:3000/api/v1/settings/1',
 				{ duration: newDuration, focusing: !settings.focusing, session_count: newCount }
       );
       setSettings({...settings, duration: response.data.duration, focusing: response.data.focusing, sessionCount: response.data.session_count});
