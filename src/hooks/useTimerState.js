@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Typography } from '@material-ui/core';
 
-const useTimerState = (timerSettings, setTimerSettings) => {
+const useTimerState = (settings) => {
   const children = ({ remainingTime }) => {
     let minutes = Math.floor(remainingTime / 60);
     let seconds = remainingTime % 60;
@@ -17,27 +18,41 @@ const useTimerState = (timerSettings, setTimerSettings) => {
       <Typography variant="h4">{children({ remainingTime })}</Typography>
     );
   };
-  const toggleIsPlaying = () => {
-    setTimerSettings({ ...timerSettings, isPlaying: !timerSettings.isPlaying })
-  };
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [key, setKey] = useState(0);
   const stopTimer = () => {
-    setTimerSettings({
-      startTime: timerSettings.startTime,
-      isPlaying: false,
-      key: timerSettings.key + 1
-    });
+    setIsPlaying(false);
+    setKey(key + 1);
   };
   const playSound = () => {
     const stopGong = new Audio('/stop_gong.mp3');
     stopGong.play();
-    stopTimer();
   };
+  const getDuration = () => {
+    if (settings.focusing && settings.sessionCount % settings.nbSessions === settings.nbSessions - 1) {
+      return settings.longBreak;
+    } else {
+      return settings.focusing ? settings.shortBreak : settings.focus;
+    }
+  };
+  const getMessage = () => {
+    if (settings.focusing) {
+      return isPlaying ? 'Focusing...' : "Let's get to work!";
+    } else {
+      return isPlaying ? 'Relaxing...' : "Let's take a break!";
+    }
+  }
 
   return {
+    key,
+    isPlaying,
+    setIsPlaying,
     renderTime,
-    toggleIsPlaying,
     stopTimer,
-    playSound
+    playSound,
+    getDuration,
+    getMessage
   }
 };
 
