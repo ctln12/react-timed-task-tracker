@@ -46,19 +46,14 @@ function Settings({ settings, setSettings }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     async function updateSettings() {
-			// const response = await axios.put(
-			// 	'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
-			// 	{ focus_time: settings.focus, short_break: settings.shortBreak,
-      //  long_break: settings.longBreak, number_sessions: settings.nbSessions,
-      //  duration: newDuration, focusing: settings.focusing, session_count: settings.sessionCount }
-			// );
       const newDuration = getDuration();
-			const response = await axios.put(
-				'http://localhost:3000/api/v1/settings/1',
-				{ focus_time: settings.focus, short_break: settings.shortBreak,
-					long_break: settings.longBreak, number_sessions: settings.nbSessions,
+      const response = await axios.put(
+        'https://rails-timed-task-tracker-api.herokuapp.com/api/v1/settings/1',
+        // 'http://localhost:3000/api/v1/settings/1',
+        { focus_time: settings.focus, short_break: settings.shortBreak,
+          long_break: settings.longBreak, number_sessions: settings.nbSessions,
           duration: newDuration, focusing: settings.focusing, session_count: settings.sessionCount }
-			);
+      );
       setSettings({focus: response.data.focus_time, shortBreak: response.data.short_break, longBreak: response.data.long_break, nbSessions: response.data.number_sessions, duration: response.data.duration, focusing: response.data.focusing, sessionCount: response.data.session_count});
 		}
 		updateSettings();
