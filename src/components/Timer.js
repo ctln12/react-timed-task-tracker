@@ -70,7 +70,11 @@ function Timer({ settings, setSettings }) {
         <Button variant="contained" size="large" onClick={() => setIsPlaying(!isPlaying)}>
           {isPlaying ? 'Pause' : 'Start'}
         </Button>
-        <Button variant="contained" size="large" onClick={stopTimer}>Stop</Button>
+        { settings.focusing ?
+          <Button variant="contained" size="large" onClick={stopTimer}>Stop</Button>
+          :
+          <Button variant="contained" size="large" onClick={handleComplete}>Skip</Button>
+        }
       </div>
     </div>
   )
