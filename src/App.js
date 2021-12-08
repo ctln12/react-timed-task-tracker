@@ -1,49 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import Timer from "./components/Timer";
 import TaskList from './components/TaskList';
 import Settings from "./components/Settings";
 
-const TASKS = [
-  {
-    id: 1,
-    name: 'Do yoga',
-    completed: false
-  },
-    {
-    id: 2,
-    name: 'Meditate',
-    completed: false
-  },
-    {
-    id: 3,
-    name: 'Build first project',
-    completed: false
-  },
-];
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tasks: [
+        {
+          id: 1,
+          name: 'Do yoga',
+          completed: false,
+          nbFocus: 1,
+          completedFocus: 0,
+        },
+          {
+          id: 2,
+          name: 'Meditate',
+          completed: false,
+          nbFocus: 2,
+          completedFocus: 0,
+        },
+          {
+          id: 3,
+          name: 'Build first project',
+          completed: false,
+          nbFocus: 2,
+          completedFocus: 0,
+        },
+      ],
+      settings: {
+        focus_length: 25,
+        short_break_length: 5,
+        long_break_length: 15,
+        long_break_after: 4,
+        nextSessionType: 'focus'
+      },
+      newTask: '',
+    }
+  }
+  render() {
+    const { tasks, settings } = this.state;
+    const nextTask = tasks.find(task => !task.completed);
+    const nextTaskName = nextTask.name;
+    const nextTaskNbFocus = nextTask.nbFocus;
+    const totalFocus = tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
+                            .reduce((sum, item) => (sum + item));
+    const duration = settings.nextSessionType === 'focus' ? settings.focus_length : totalFocus % settings.long_break_after === 0 ? settings.long_break_length : settings.short_break_length;
 
-const SETTINGS = {
-  focus_length: 25,
-  short_break_length: 5,
-  long_break_length: 15,
-  long_break_after: 4,
-}
-
-function App() {
-  return (
-    <div className='App'>
-      <nav>
-				<NavLink exact activeClassName='active-link' to='/'>Timer</NavLink> |
-				<NavLink exact activeClassName='active-link' to='/tasks'>Tasks</NavLink> |
-				<NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
-      </nav>
-      <Switch>
-        <Route exact path='/' component={Timer} />
-        <Route exact path='/tasks' render={() => <TaskList tasks={TASKS} />} />
-        <Route exact path='/settings' render={() => <Settings settings={SETTINGS} />} />
-      </Switch>
-    </div>
-  );
+    return (
+      <div className='App'>
+        <nav>
+          <NavLink exact activeClassName='active-link' to='/'>Timer</NavLink> |
+          <NavLink exact activeClassName='active-link' to='/tasks'>Tasks</NavLink> |
+          <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
+        </nav>
+        <Switch>
+          <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
+          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} />} />
+          <Route exact path='/settings' render={() => <Settings settings={settings} />} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,10 +1,13 @@
 import React from 'react';
 
-function TimerCurrentTask() {
+function TimerCurrentTask({ taskName, taskNbFocus }) {
+  const pluralize = (n, word, suffix = 's') =>
+  `${n} ${word}${n !== 1 ? suffix : ''}`;
+
   return (
     <div className='TimerCurrentTask'>
-      <p>Do homework</p>
-      <p><button>+</button> 1 session <button>-</button></p>
+      <p>{taskName}</p>
+      <p><button>+</button> {pluralize(taskNbFocus, 'session')} <button>-</button></p>
     </div>
   );
 }

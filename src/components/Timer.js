@@ -2,12 +2,12 @@ import React from 'react';
 import TimerCountDown from './TimerCountDown';
 import TimerHeader from './TimerHeader';
 
-function Timer() {
+function Timer({ nextTaskName, nextTaskNbFocus, duration }) {
   return (
     <div className='Timer'>
       <h1>Timer</h1>
-      <TimerHeader />
-      <TimerCountDown />
+      <TimerHeader nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus}  />
+      <TimerCountDown duration={duration} />
     </div>
   );
 }

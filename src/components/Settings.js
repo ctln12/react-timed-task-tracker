@@ -5,24 +5,40 @@ function Settings({ settings }) {
     <div className='Settings'>
       <h1>Settings</h1>
       <form>
-        <label for='focus'>Focus length</label>
-        <select name="focus_length" id="focus">
-          <option value={settings.focus_length}>{`${settings.focus_length} minutes`}</option>
+        <label htmlFor='focus'>Focus length</label>
+        <select value={settings.focus_length} name="focus_length" id="focus">
+          <option value={23}>23 minutes</option>
+          <option value={24}>24 minutes</option>
+          <option value={25}>25 minutes</option>
+          <option value={26}>26 minutes</option>
+          <option value={27}>27 minutes</option>
         </select>
         <br/>
-        <label for='short'>Short break length</label>
-        <select name="short_break_length" id="short">
-          <option value={settings.short_break_length}>{`${settings.short_break_length} minutes`}</option>
+        <label htmlFor='short'>Short break length</label>
+        <select value={settings.short_break_length} name="short_break_length" id="short">
+          <option value={3}>3 minutes</option>
+          <option value={4}>4 minutes</option>
+          <option value={5}>5 minutes</option>
+          <option value={6}>6 minutes</option>
+          <option value={7}>7 minutes</option>
         </select>
         <br/>
-        <label for='long'>Long break length</label>
-        <select name="short_break_length" id="long">
-          <option value={settings.long_break_length}>{`${settings.long_break_length} minutes`}</option>
+        <label htmlFor='long'>Long break length</label>
+        <select value={settings.long_break_length} name="short_break_length" id="long">
+          <option value={13}>13 minutes</option>
+          <option value={14}>14 minutes</option>
+          <option value={15}>15 minutes</option>
+          <option value={16}>16 minutes</option>
+          <option value={17}>17 minutes</option>
         </select>
         <br/>
-        <label for='sequence'>Long break after</label>
-        <select name="long_break_after" id="sequence">
-          <option value={settings.long_break_after}>{`${settings.long_break_after} sessions`}</option>
+        <label htmlFor='sequence'>Long break after</label>
+        <select value={settings.long_break_after} name="long_break_after" id="sequence">
+          <option value={1}>1 sessions</option>
+          <option value={2}>2 sessions</option>
+          <option value={3}>3 sessions</option>
+          <option value={4}>4 sessions</option>
+          <option value={5}>5 sessions</option>
         </select>
         <br/>
         <input type="submit" value="Save" />

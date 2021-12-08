@@ -1,9 +1,9 @@
 import React from 'react';
 
-function TimerCountDown() {
+function TimerCountDown({ duration }) {
   return (
     <div className='TimerCountDown'>
-      <p>25:00</p>
+      <p>{duration}:00</p>
       <button>Start</button>
       <button>Pause</button>
       <button>Stop</button>
