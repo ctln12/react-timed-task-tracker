@@ -40,7 +40,22 @@ class App extends Component {
       },
       newTask: '',
     }
+    this.onChangeSettings = this.onChangeSettings.bind(this);
   }
+
+  onChangeSettings(e) {
+    const target = e.target;
+    const value =  target.value;
+    const name = target.name;
+
+    this.setState(prevState => ({
+      settings: {
+        ...prevState.settings,
+        [name]: parseInt(value)
+      }
+    }))
+  }
+
   render() {
     const { tasks, settings } = this.state;
     const nextTask = tasks.find(task => !task.completed);
@@ -60,7 +75,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
           <Route exact path='/tasks' render={() => <TaskList tasks={tasks} />} />
-          <Route exact path='/settings' render={() => <Settings settings={settings} />} />
+          <Route exact path='/settings' render={() => <Settings settings={settings} onChangeSettings={this.onChangeSettings} />} />
         </Switch>
       </div>
     );
