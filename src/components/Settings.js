@@ -1,15 +1,14 @@
 import React from 'react';
 import { createSelectOptions } from "../helper/dropdown";
 
-function Settings({ settings, onChangeSettings }) {
+function Settings({ settings, changeSettings, saveSettings }) {
   const handleSubmit = (e) => {
+    saveSettings();
     e.preventDefault();
-    alert(`Settings saved!`);
-    console.log(settings);
   }
 
   const handleSelectChange = (e) => {
-    onChangeSettings(e);
+    changeSettings(e.target);
   };
 
   const minuteOptions = createSelectOptions(120, 'minute');
@@ -20,22 +19,22 @@ function Settings({ settings, onChangeSettings }) {
       <h1>Settings</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor='focus'>Focus length</label>
-        <select name="focus_length" id="focus" value={settings.focus_length} onChange={handleSelectChange}>
+        <select name="focusLength" id="focus" value={settings.focusLength} onChange={handleSelectChange}>
           {minuteOptions}
         </select>
         <br/>
         <label htmlFor='short'>Short break length</label>
-        <select name="short_break_length" id="short" value={settings.short_break_length} onChange={handleSelectChange}>
+        <select name="shortBreakLength" id="short" value={settings.shortBreakLength} onChange={handleSelectChange}>
           {minuteOptions}
         </select>
         <br/>
         <label htmlFor='long'>Long break length</label>
-        <select name="long_break_length" id="long" value={settings.long_break_length} onChange={handleSelectChange}>
+        <select name="longBreakLength" id="long" value={settings.longBreakLength} onChange={handleSelectChange}>
           {minuteOptions}
         </select>
         <br/>
         <label htmlFor='sequence'>Long break after</label>
-        <select name="long_break_after" id="sequence" value={settings.long_break_after} onChange={handleSelectChange}>
+        <select name="longBreakAfter" id="sequence" value={settings.longBreakAfter} onChange={handleSelectChange}>
           {sessionOptions}
         </select>
         <br/>

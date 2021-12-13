@@ -32,30 +32,35 @@ class App extends Component {
         },
       ],
       settings: {
-        focus_length: 25,
-        short_break_length: 5,
-        long_break_length: 15,
-        long_break_after: 4,
+        focusLength: 25,
+        shortBreakLength: 5,
+        longBreakLength: 15,
+        longBreakAfter: 4,
         nextSessionType: 'focus'
       },
-      newTaskName: '',
     }
-    this.onChangeSettings = this.onChangeSettings.bind(this);
+    this.changeSettings = this.changeSettings.bind(this);
+    this.saveSettings = this.saveSettings.bind(this);
     this.changeNewTask = this.changeNewTask.bind(this);
     this.addTask = this.addTask.bind(this);
   }
 
-  onChangeSettings(e) {
-    const target = e.target;
-    const value =  target.value;
-    const name = target.name;
+  changeSettings(option) {
+    const value =  option.value;
+    const name = option.name;
 
     this.setState(prevState => ({
+      ...prevState,
       settings: {
         ...prevState.settings,
         [name]: parseInt(value)
       }
     }))
+  }
+
+  saveSettings() {
+    // Call to API for persistence
+    alert(`Settings saved!`);
   }
 
   changeNewTask(name) {
@@ -80,7 +85,7 @@ class App extends Component {
     const nextTaskNbFocus = nextTask.nbFocus;
     const totalFocus = tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
                             .reduce((sum, item) => (sum + item));
-    const duration = settings.nextSessionType === 'focus' ? settings.focus_length : totalFocus % settings.long_break_after === 0 ? settings.long_break_length : settings.short_break_length;
+    const duration = settings.nextSessionType === 'focus' ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
 
     return (
       <div className='App'>
@@ -92,7 +97,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
           <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} />} />
-          <Route exact path='/settings' render={() => <Settings settings={settings} onChangeSettings={this.onChangeSettings} />} />
+          <Route exact path='/settings' render={() => <Settings settings={settings} changeSettings={this.changeSettings} saveSettings={this.saveSettings} />} />
         </Switch>
       </div>
     );
