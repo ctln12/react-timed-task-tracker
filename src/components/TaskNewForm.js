@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Taskform = ({ newTaskName, changeNewTask, addTask }) => {
+const TaskNewForm = ({ newTaskName, changeNewTask, addTask }) => {
   const handleChange = (e) => {
     changeNewTask(e.target.value);
   }
@@ -22,4 +22,4 @@ const Taskform = ({ newTaskName, changeNewTask, addTask }) => {
   );
 }
 
-export default Taskform;
+export default TaskNewForm;

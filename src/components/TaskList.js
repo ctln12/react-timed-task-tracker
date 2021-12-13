@@ -1,5 +1,5 @@
 import React from 'react';
-import Taskform from './TaskForm';
+import TaskNewForm from './TaskNewForm';
 import Task from './Task';
 
 const Tasklist = ({ tasks, newTaskName, changeNewTask, addTask }) => {
@@ -8,7 +8,7 @@ const Tasklist = ({ tasks, newTaskName, changeNewTask, addTask }) => {
   return (
     <div className='TaskList'>
       <h1>Tasks</h1>
-      <Taskform newTaskName={newTaskName} changeNewTask={changeNewTask} addTask={addTask} />
+      <TaskNewForm newTaskName={newTaskName} changeNewTask={changeNewTask} addTask={addTask} />
       <ul>{ taskList }</ul>
     </div>
   );
