@@ -43,6 +43,7 @@ class App extends Component {
     this.saveSettings = this.saveSettings.bind(this);
     this.changeNewTask = this.changeNewTask.bind(this);
     this.addTask = this.addTask.bind(this);
+    this.editTask = this.editTask.bind(this);
   }
 
   changeSettings(option) {
@@ -78,6 +79,14 @@ class App extends Component {
     this.changeNewTask('');
   }
 
+  editTask(task_id, newTaskName) {
+    const updatedTasks = this.state.tasks.map(task => task.id === task_id ? {...task, name: newTaskName} : task);
+    this.setState(prevState => ({
+      ...prevState,
+      tasks: updatedTasks
+    }))
+  }
+
   render() {
     const { tasks, settings, newTaskName } = this.state;
     const nextTask = tasks.find(task => !task.completed);
@@ -96,7 +105,7 @@ class App extends Component {
         </nav>
         <Switch>
           <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
-          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} />} />
+          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} editTask={this.editTask} />} />
           <Route exact path='/settings' render={() => <Settings settings={settings} changeSettings={this.changeSettings} saveSettings={this.saveSettings} />} />
         </Switch>
       </div>
