@@ -38,9 +38,11 @@ class App extends Component {
         long_break_after: 4,
         nextSessionType: 'focus'
       },
-      newTask: '',
+      newTaskName: '',
     }
     this.onChangeSettings = this.onChangeSettings.bind(this);
+    this.changeNewTask = this.changeNewTask.bind(this);
+    this.addTask = this.addTask.bind(this);
   }
 
   onChangeSettings(e) {
@@ -56,8 +58,23 @@ class App extends Component {
     }))
   }
 
+  changeNewTask(name) {
+    this.setState(prevState => ({
+      ...prevState,
+      newTaskName: name
+    }));
+  }
+
+  addTask(newTaskName) {
+    this.setState(prevState => ({
+      ...prevState,
+      tasks: [...prevState.tasks, { id: 4, name: newTaskName, completed: false, nbFocus: 1, completedFocus: 0 }]
+    }))
+    this.changeNewTask('');
+  }
+
   render() {
-    const { tasks, settings } = this.state;
+    const { tasks, settings, newTaskName } = this.state;
     const nextTask = tasks.find(task => !task.completed);
     const nextTaskName = nextTask.name;
     const nextTaskNbFocus = nextTask.nbFocus;
@@ -74,7 +91,7 @@ class App extends Component {
         </nav>
         <Switch>
           <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
-          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} />} />
+          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} />} />
           <Route exact path='/settings' render={() => <Settings settings={settings} onChangeSettings={this.onChangeSettings} />} />
         </Switch>
       </div>
