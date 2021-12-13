@@ -2,7 +2,7 @@ import React from 'react';
 import TaskNewForm from './TaskNewForm';
 import Task from './Task';
 
-const Tasklist = ({ tasks, newTaskName, changeNewTask, addTask }) => {
+const TaskList = ({ tasks, newTaskName, changeNewTask, addTask }) => {
   const taskList = tasks.map(task => (<Task key={task.id} task={task}/>));
 
   return (
@@ -14,4 +14,4 @@ const Tasklist = ({ tasks, newTaskName, changeNewTask, addTask }) => {
   );
 }
 
-export default Tasklist;
+export default TaskList;
