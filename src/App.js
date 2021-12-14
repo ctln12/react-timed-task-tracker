@@ -38,12 +38,14 @@ class App extends Component {
         longBreakAfter: 4,
         nextSessionType: 'focus'
       },
+      newTaskName: ''
     }
     this.changeSettings = this.changeSettings.bind(this);
     this.saveSettings = this.saveSettings.bind(this);
     this.changeNewTask = this.changeNewTask.bind(this);
     this.addTask = this.addTask.bind(this);
     this.editTask = this.editTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   changeSettings(option) {
@@ -72,15 +74,24 @@ class App extends Component {
   }
 
   addTask(newTaskName) {
+    const nextId = this.state.tasks[this.state.tasks.length - 1].id + 1;
     this.setState(prevState => ({
       ...prevState,
-      tasks: [...prevState.tasks, { id: 4, name: newTaskName, completed: false, nbFocus: 1, completedFocus: 0 }]
+      tasks: [...prevState.tasks, { id: nextId, name: newTaskName, completed: false, nbFocus: 1, completedFocus: 0 }]
     }))
     this.changeNewTask('');
   }
 
   editTask(updatedTask) {
     const updatedTasks = this.state.tasks.map(task => task.id === updatedTask.id ? updatedTask : task);
+    this.setState(prevState => ({
+      ...prevState,
+      tasks: updatedTasks
+    }))
+  }
+
+  deleteTask(task_id) {
+    const updatedTasks = this.state.tasks.filter(task => task.id !== task_id);
     this.setState(prevState => ({
       ...prevState,
       tasks: updatedTasks
@@ -105,7 +116,7 @@ class App extends Component {
         </nav>
         <Switch>
           <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
-          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} editTask={this.editTask} />} />
+          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} editTask={this.editTask} deleteTask={this.deleteTask} />} />
           <Route exact path='/settings' render={() => <Settings settings={settings} changeSettings={this.changeSettings} saveSettings={this.saveSettings} />} />
         </Switch>
       </div>
