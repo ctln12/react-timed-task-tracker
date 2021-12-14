@@ -5,7 +5,8 @@ const TaskEditForm = ({ task, editTask, toggleIsEditing }) => {
   const [taskName, handleChange] = useInputState(task.name);
 
   const handleSubmit = (e) => {
-    editTask(task.id, taskName, task.completed);
+    task.name = taskName;
+    editTask(task);
     toggleIsEditing();
     e.preventDefault();
   }

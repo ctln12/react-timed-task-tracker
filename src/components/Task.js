@@ -8,7 +8,8 @@ const Task = ({ task, editTask }) => {
     toggleIsEditing();
   }
   const handleCheckboxChange = () => {
-    editTask(task.id, task.name, !task.completed);
+    task.completed = !task.completed;
+    editTask(task);
   }
 
   return (
