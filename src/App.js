@@ -79,8 +79,8 @@ class App extends Component {
     this.changeNewTask('');
   }
 
-  editTask(task_id, newTaskName) {
-    const updatedTasks = this.state.tasks.map(task => task.id === task_id ? {...task, name: newTaskName} : task);
+  editTask(task_id, newTaskName, newStatus) {
+    const updatedTasks = this.state.tasks.map(task => task.id === task_id ? {...task, name: newTaskName, completed: newStatus} : task);
     this.setState(prevState => ({
       ...prevState,
       tasks: updatedTasks

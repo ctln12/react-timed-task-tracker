@@ -1,11 +1,12 @@
 import React from 'react';
 import useInputState from "../hooks/useInputState";
 
-const TaskEditForm = ({ task, editTask }) => {
+const TaskEditForm = ({ task, editTask, toggleIsEditing }) => {
   const [taskName, handleChange] = useInputState(task.name);
 
   const handleSubmit = (e) => {
-    editTask(task.id, taskName);
+    editTask(task.id, taskName, task.completed);
+    toggleIsEditing();
     e.preventDefault();
   }
 
@@ -15,7 +16,9 @@ const TaskEditForm = ({ task, editTask }) => {
         type='text'
         value={taskName}
         onChange={handleChange}
+        autoFocus
       />
+      <input type='submit' value='Save' />
     </form>
   );
 }
