@@ -113,13 +113,14 @@ class App extends Component {
 
   handlePlusClick(e, task) {
     task.nbFocus += 1;
+    task.completed = task.nbFocus === task.completedFocus && task.nbFocus !== 0;
     this.editTask(task);
     e.preventDefault();
   }
 
   handleMinusClick(e, task) {
     task.nbFocus -= 1;
-    task.completed = task.nbFocus === task.completedFocus & task.nbFocus !== 0;
+    task.completed = task.nbFocus === task.completedFocus && task.nbFocus !== 0;
     this.editTask(task);
     task.completed && alert(`${task.name} - ${task.completedFocus} / ${task.nbFocus} - Completed!`);
     e.preventDefault();

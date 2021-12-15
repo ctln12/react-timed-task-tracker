@@ -1,23 +1,8 @@
 import React, { useState } from 'react';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { renderTime, playSound } from '../helper/countdown';
 
 function TimerCountDown({ duration, isFocusing, nextTask, editTask, toggleIsFocusing }) {
-  const children = ({ remainingTime }) => {
-    let minutes = Math.floor(remainingTime / 60);
-    let seconds = remainingTime % 60;
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-    if (seconds < 10) {
-      seconds = `0${seconds}`;
-    }
-    return `${minutes}:${seconds}`;
-  }
-  const renderTime = ({ remainingTime }) => {
-    return (
-      <span>{children({ remainingTime })}</span>
-    );
-  }
   const [isPlaying, setIsPlaying] = useState(false);
   const [key, setKey] = useState(0);
   const handleStartClick = () => {
@@ -26,10 +11,6 @@ function TimerCountDown({ duration, isFocusing, nextTask, editTask, toggleIsFocu
   const resetTimer = () => {
     setKey(key + 1);
     setIsPlaying(false);
-  }
-  const playSound = () => {
-    const stopGong = new Audio('/stop_gong.mp3');
-    stopGong.play();
   }
   const manageCurrentTask = () => {
     if (isFocusing) {
