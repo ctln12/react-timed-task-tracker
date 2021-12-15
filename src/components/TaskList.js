@@ -2,8 +2,8 @@ import React from 'react';
 import TaskNewForm from './TaskNewForm';
 import Task from './Task';
 
-const TaskList = ({ tasks, newTaskName, changeNewTask, addTask, editTask, deleteTask }) => {
-  const taskList = tasks.map(task => (<Task key={task.id} task={task} editTask={editTask} deleteTask={deleteTask} />));
+const TaskList = ({ tasks, newTaskName, changeNewTask, addTask, editTask, deleteTask, handlePlusClick, handleMinusClick }) => {
+  const taskList = tasks.map(task => (<Task key={task.id} task={task} editTask={editTask} deleteTask={deleteTask} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />));
 
   return (
     <div className='TaskList'>

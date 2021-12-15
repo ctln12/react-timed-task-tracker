@@ -47,6 +47,8 @@ class App extends Component {
     this.editTask = this.editTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.toggleIsFocusing = this.toggleIsFocusing.bind(this);
+    this.handlePlusClick = this.handlePlusClick.bind(this);
+    this.handleMinusClick = this.handleMinusClick.bind(this);
   }
 
   changeSettings(option) {
@@ -109,6 +111,20 @@ class App extends Component {
     }))
   }
 
+  handlePlusClick(e, task) {
+    task.nbFocus += 1;
+    this.editTask(task);
+    e.preventDefault();
+  }
+
+  handleMinusClick(e, task) {
+    task.nbFocus -= 1;
+    task.completed = task.nbFocus === task.completedFocus & task.nbFocus !== 0;
+    this.editTask(task);
+    task.completed && alert(`${task.name} - ${task.completedFocus} / ${task.nbFocus} - Completed!`);
+    e.preventDefault();
+  }
+
   render() {
     const { tasks, settings, newTaskName } = this.state;
     const nextTask = tasks.find(task => !task.completed);
@@ -126,9 +142,38 @@ class App extends Component {
           <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
         </nav>
         <Switch>
-          <Route exact path='/' render={() => <Timer nextTask={nextTask} duration={duration} editTask={this.editTask} isFocusing={settings.isFocusing} toggleIsFocusing={this.toggleIsFocusing} hasTasks={hasTasks} hasUncompletedTasks={hasUncompletedTasks} />} />
-          <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} editTask={this.editTask} deleteTask={this.deleteTask} />} />
-          <Route exact path='/settings' render={() => <Settings settings={settings} changeSettings={this.changeSettings} saveSettings={this.saveSettings} />} />
+          <Route exact path='/' render={() => {
+            return  <Timer
+                      nextTask={nextTask}
+                      duration={duration}
+                      editTask={this.editTask}
+                      isFocusing={settings.isFocusing}
+                      toggleIsFocusing={this.toggleIsFocusing}
+                      hasTasks={hasTasks}
+                      hasUncompletedTasks={hasUncompletedTasks}
+                      handlePlusClick={this.handlePlusClick}
+                      handleMinusClick={this.handleMinusClick}
+                    />;
+          }} />
+          <Route exact path='/tasks' render={() => {
+            return  <TaskList
+                      tasks={tasks}
+                      newTaskName={newTaskName}
+                      changeNewTask={this.changeNewTask}
+                      addTask={this.addTask}
+                      editTask={this.editTask}
+                      deleteTask={this.deleteTask}
+                      handlePlusClick={this.handlePlusClick}
+                      handleMinusClick={this.handleMinusClick}
+                    />;
+          }} />
+          <Route exact path='/settings' render={() => {
+            return  <Settings
+                      settings={settings}
+                      changeSettings={this.changeSettings}
+                      saveSettings={this.saveSettings}
+                    />;
+          }} />
         </Switch>
       </div>
     );
