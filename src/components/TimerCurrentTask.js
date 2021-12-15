@@ -1,11 +1,20 @@
 import React from 'react';
 import { pluralize } from "../helper/pluralize";
 
-function TimerCurrentTask({ taskName, taskNbFocus }) {
+function TimerCurrentTask({ nextTask, editTask }) {
+  const handlePlusClick = () => {
+    nextTask.nbFocus += 1;
+    editTask(nextTask);
+  }
+  const handleMinusClick = () => {
+    nextTask.nbFocus -= 1;
+    editTask(nextTask);
+  }
+
   return (
     <div className='TimerCurrentTask'>
-      <p>{taskName}</p>
-      <p><button>+</button> {pluralize(taskNbFocus, 'session')} <button>-</button></p>
+      <p>{nextTask.name}</p>
+      <p><button onClick={handlePlusClick}>+</button> {pluralize(nextTask.nbFocus, 'session')} <button onClick={handleMinusClick}>-</button></p>
     </div>
   );
 }

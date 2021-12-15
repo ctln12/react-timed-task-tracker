@@ -1,11 +1,11 @@
 import React from 'react';
 import TimerCurrentTask from './TimerCurrentTask';
 
-function TimerHeader({ nextTaskName, nextTaskNbFocus }) {
+function TimerHeader({ nextTask, editTask }) {
   return (
     <div className='TimerHeader'>
       <h2>Get to work!</h2>
-      <TimerCurrentTask taskName={nextTaskName} taskNbFocus={nextTaskNbFocus} />
+      <TimerCurrentTask nextTask={nextTask} editTask={editTask} />
     </div>
   );
 }

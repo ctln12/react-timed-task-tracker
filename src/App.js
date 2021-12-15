@@ -101,8 +101,6 @@ class App extends Component {
   render() {
     const { tasks, settings, newTaskName } = this.state;
     const nextTask = tasks.find(task => !task.completed);
-    const nextTaskName = nextTask.name;
-    const nextTaskNbFocus = nextTask.nbFocus;
     const totalFocus = tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
                             .reduce((sum, item) => (sum + item));
     const duration = settings.nextSessionType === 'focus' ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
@@ -115,7 +113,7 @@ class App extends Component {
           <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
         </nav>
         <Switch>
-          <Route exact path='/' render={() => <Timer nextTaskName={nextTaskName} nextTaskNbFocus={nextTaskNbFocus} duration={duration} />} />
+          <Route exact path='/' render={() => <Timer nextTask={nextTask} duration={duration} editTask={this.editTask} />} />
           <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} editTask={this.editTask} deleteTask={this.deleteTask} />} />
           <Route exact path='/settings' render={() => <Settings settings={settings} changeSettings={this.changeSettings} saveSettings={this.saveSettings} />} />
         </Switch>
