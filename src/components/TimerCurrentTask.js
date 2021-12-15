@@ -3,7 +3,7 @@ import { pluralize } from "../helper/pluralize";
 import useToggleState from '../hooks/useToggleState';
 import TaskEditForm from './TaskEditForm';
 
-function TimerCurrentTask({ nextTask, editTask }) {
+function TimerCurrentTask({ nextTask, editTask, isFocusing }) {
   const handlePlusClick = () => {
     nextTask.nbFocus += 1;
     editTask(nextTask);
@@ -22,9 +22,10 @@ function TimerCurrentTask({ nextTask, editTask }) {
       {isEditing ?
         <TaskEditForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} />
         :
-        <p>{nextTask.name} <button onClick={handleTaskNameClick}>edit</button></p>
+        <p>{!isFocusing && 'Next up: '}{nextTask.name} <button onClick={handleTaskNameClick}>edit</button></p>
       }
       <p><button onClick={handlePlusClick}>+</button> {pluralize(nextTask.nbFocus, 'session')} <button onClick={handleMinusClick}>-</button></p>
+      <p>{nextTask.completedFocus} / {pluralize(nextTask.nbFocus, 'session')}</p>
     </div>
   );
 }

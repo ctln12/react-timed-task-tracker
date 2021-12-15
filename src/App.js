@@ -36,7 +36,7 @@ class App extends Component {
         shortBreakLength: 5,
         longBreakLength: 15,
         longBreakAfter: 4,
-        nextSessionType: 'focus'
+        isFocusing: true
       },
       newTaskName: ''
     }
@@ -46,6 +46,7 @@ class App extends Component {
     this.addTask = this.addTask.bind(this);
     this.editTask = this.editTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.toggleIsFocusing = this.toggleIsFocusing.bind(this);
   }
 
   changeSettings(option) {
@@ -98,12 +99,25 @@ class App extends Component {
     }))
   }
 
+  toggleIsFocusing() {
+    this.setState(prevState => ({
+      ...prevState,
+      settings: {
+        ...prevState.settings,
+        isFocusing: !prevState.settings.isFocusing
+      }
+    }))
+  }
+
   render() {
     const { tasks, settings, newTaskName } = this.state;
     const nextTask = tasks.find(task => !task.completed);
     const totalFocus = tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
-                            .reduce((sum, item) => (sum + item));
-    const duration = settings.nextSessionType === 'focus' ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
+                            .reduce((sum, item) => (sum + item), 0, 0);
+    const duration = settings.isFocusing ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
+    const hasTasks = tasks.length !== 0;
+    const hasUncompletedTasks = tasks.some(task => !task.completed);
+    console.log(hasUncompletedTasks);
 
     return (
       <div className='App'>
@@ -113,7 +127,7 @@ class App extends Component {
           <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
         </nav>
         <Switch>
-          <Route exact path='/' render={() => <Timer nextTask={nextTask} duration={duration} editTask={this.editTask} />} />
+          <Route exact path='/' render={() => <Timer nextTask={nextTask} duration={duration} editTask={this.editTask} isFocusing={settings.isFocusing} toggleIsFocusing={this.toggleIsFocusing} hasTasks={hasTasks} hasUncompletedTasks={hasUncompletedTasks} />} />
           <Route exact path='/tasks' render={() => <TaskList tasks={tasks} newTaskName={newTaskName} changeNewTask={this.changeNewTask} addTask={this.addTask} editTask={this.editTask} deleteTask={this.deleteTask} />} />
           <Route exact path='/settings' render={() => <Settings settings={settings} changeSettings={this.changeSettings} saveSettings={this.saveSettings} />} />
         </Switch>

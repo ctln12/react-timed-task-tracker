@@ -2,12 +2,12 @@ import React from 'react';
 import TimerCountDown from './TimerCountDown';
 import TimerHeader from './TimerHeader';
 
-function Timer({ nextTask, duration, editTask }) {
+function Timer({ nextTask, duration, editTask, isFocusing, toggleIsFocusing, hasTasks, hasUncompletedTasks }) {
   return (
     <div className='Timer'>
       <h1>Timer</h1>
-      <TimerHeader nextTask={nextTask} editTask={editTask} />
-      <TimerCountDown duration={duration} />
+      <TimerHeader nextTask={nextTask} editTask={editTask} isFocusing={isFocusing} hasTasks={hasTasks} hasUncompletedTasks={hasUncompletedTasks} />
+      <TimerCountDown duration={duration} isFocusing={isFocusing} nextTask={nextTask} editTask={editTask} toggleIsFocusing={toggleIsFocusing} />
     </div>
   );
 }
