@@ -9,7 +9,7 @@ const Task = ({ task, editTask, deleteTask }) => {
   }
   const handleCheckboxChange = () => {
     task.completed = !task.completed;
-    task.completedFocus = task.nbFocus;
+    task.completedFocus = task.completed ? task.nbFocus : 0;
     editTask(task);
   }
   const handleDeleteClick = () => {

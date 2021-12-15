@@ -78,7 +78,7 @@ class App extends Component {
     const nextId = this.state.tasks[this.state.tasks.length - 1].id + 1;
     this.setState(prevState => ({
       ...prevState,
-      tasks: [...prevState.tasks, { id: nextId, name: newTaskName, completed: false, nbFocus: 1, completedFocus: 0 }]
+      tasks: [...prevState.tasks, { id: nextId, name: newTaskName, completed: false, nbFocus: 0, completedFocus: 0 }]
     }))
     this.changeNewTask('');
   }
@@ -117,7 +117,6 @@ class App extends Component {
     const duration = settings.isFocusing ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
     const hasTasks = tasks.length !== 0;
     const hasUncompletedTasks = tasks.some(task => !task.completed);
-    console.log(hasUncompletedTasks);
 
     return (
       <div className='App'>
