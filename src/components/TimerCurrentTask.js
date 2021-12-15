@@ -18,7 +18,6 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing }) {
     toggleIsEditing();
   }
   const [isEditing, toggleIsEditing] = useToggleState(false);
-  const zeroFocus = nextTask.nbFocus === 0;
   const disabled = nextTask.nbFocus <= nextTask.completedFocus;
 
   return (
@@ -29,7 +28,7 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing }) {
         <p>{!isFocusing && 'Next up: '}{nextTask.name} <button onClick={handleTaskNameClick}>edit</button></p>
       }
       <p><button onClick={handlePlusClick}>+</button> {pluralize(nextTask.nbFocus, 'session')} <button disabled={disabled} onClick={handleMinusClick}>-</button></p>
-      <p>{!zeroFocus && `${nextTask.completedFocus} / ${pluralize(nextTask.nbFocus, 'session')}`}</p>
+      <p>{!disabled && `${nextTask.completedFocus} / ${pluralize(nextTask.nbFocus, 'session')}`}</p>
     </div>
   );
 }
