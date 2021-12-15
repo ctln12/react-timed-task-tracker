@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useInputState from "../hooks/useInputState";
 
 const TaskEditForm = ({ task, editTask, toggleIsEditing }) => {
-  const [taskName, handleChange] = useInputState(task.name);
+  const [taskName, handleTaskNameChange] = useInputState(task.name);
   const [taskNbFocus, handleNbFocusChange] = useState(task.nbFocus);
   const disabled = taskNbFocus <= task.completedFocus;
 
@@ -28,7 +28,7 @@ const TaskEditForm = ({ task, editTask, toggleIsEditing }) => {
       <input
         type='text'
         value={taskName}
-        onChange={handleChange}
+        onChange={handleTaskNameChange}
         autoFocus
       />
       <button onClick={handlePlusClick}>+</button>
