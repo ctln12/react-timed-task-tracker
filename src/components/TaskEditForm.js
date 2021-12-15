@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { pluralize } from '../helper/pluralize';
 import useInputState from "../hooks/useInputState";
 
 const TaskEditForm = ({ task, editTask, toggleIsEditing }) => {
@@ -32,8 +33,7 @@ const TaskEditForm = ({ task, editTask, toggleIsEditing }) => {
         autoFocus
       />
       <button onClick={handlePlusClick}>+</button>
-      <input type='number' value={taskNbFocus} onChange={handleNbFocusChange} />
-      {/* {pluralize(nextTask.nbFocus, 'session')} */}
+      <input type='text' value={pluralize(taskNbFocus, 'session')} onChange={handleNbFocusChange} />
       <button disabled={disabled} onClick={handleMinusClick}>-</button>
       <input type='submit' value='Save' />
     </form>
