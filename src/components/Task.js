@@ -5,6 +5,7 @@ import { pluralize } from '../helper/pluralize';
 
 const Task = ({ task, editTask, deleteTask, handlePlusClick, handleMinusClick }) => {
   const [isEditing, toggleIsEditing] = useToggleState(false);
+  const disabled = task.nbFocus <= task.completedFocus;
   const handleEditClick = () => {
     toggleIsEditing();
   }
@@ -20,7 +21,7 @@ const Task = ({ task, editTask, deleteTask, handlePlusClick, handleMinusClick })
   return (
     <>
       { isEditing ?
-        <TaskEditForm key={task.id} task={task} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
+        <TaskEditForm key={task.id} task={task} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} disabled={disabled} />
         :
         <li className='Task' key={task.id}>
           <input type='checkbox' checked={task.completed} value={task.completed} onChange={handleCheckboxChange} /> {task.name} - {`${task.completedFocus} / ${pluralize(task.nbFocus, 'session')}`} <button onClick={handleEditClick}>edit</button> <button onClick={handleDeleteClick}>delete</button>

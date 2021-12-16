@@ -11,7 +11,7 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, han
   return (
     <div className='TimerCurrentTask'>
       {isEditing ?
-        <TaskEditForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
+        <TaskEditForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} disabled={disabled} />
         :
         <p>{!isFocusing && 'Next up: '}{nextTask.name} <button onClick={() => toggleIsEditing()}>edit</button></p>
       }

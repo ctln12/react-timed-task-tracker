@@ -2,9 +2,8 @@ import React from 'react';
 import useInputState from "../hooks/useInputState";
 import TaskFocusButtons from './TaskFocusButtons';
 
-const TaskEditForm = ({ task, editTask, toggleIsEditing, handlePlusClick, handleMinusClick }) => {
+const TaskEditForm = ({ task, editTask, toggleIsEditing, handlePlusClick, handleMinusClick, disabled }) => {
   const [taskName, handleTaskNameChange] = useInputState(task.name);
-  const disabled = task.nbFocus <= task.completedFocus;
   const handleSubmit = (e) => {
     task.name = taskName;
     editTask(task);
