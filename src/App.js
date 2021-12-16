@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Route, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Timer from "./components/Timer";
 import TaskList from './components/TaskList';
 import Settings from "./components/Settings";
+import Navbar from './components/Navbar';
 
 class App extends Component {
   constructor(props) {
@@ -131,17 +132,14 @@ class App extends Component {
     const nextTask = tasks.find(task => !task.completed);
     const totalFocus = tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
                             .reduce((sum, item) => (sum + item), 0, 0);
+    console.log('Total focus session number: ' + totalFocus);
     const duration = settings.isFocusing ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
     const hasTasks = tasks.length !== 0;
     const hasUncompletedTasks = tasks.some(task => !task.completed);
 
     return (
       <div className='App'>
-        <nav>
-          <NavLink exact activeClassName='active-link' to='/'>Timer</NavLink> |
-          <NavLink exact activeClassName='active-link' to='/tasks'>Tasks</NavLink> |
-          <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
-        </nav>
+        <Navbar />
         <Switch>
           <Route exact path='/' render={() => {
             return  <Timer
