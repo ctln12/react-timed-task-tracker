@@ -4,6 +4,7 @@ import Timer from "./components/Timer";
 import TaskList from './components/TaskList';
 import Settings from "./components/Settings";
 import Navbar from './components/Navbar';
+import { computeDuration, countFocus } from './helper/timer';
 
 class App extends Component {
   constructor(props) {
@@ -130,10 +131,9 @@ class App extends Component {
   render() {
     const { tasks, settings, newTaskName } = this.state;
     const nextTask = tasks.find(task => !task.completed);
-    const totalFocus = tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
-                            .reduce((sum, item) => (sum + item), 0, 0);
+    const totalFocus = countFocus(tasks);
     console.log('Total focus session number: ' + totalFocus);
-    const duration = settings.isFocusing ? settings.focusLength : totalFocus % settings.longBreakAfter === 0 ? settings.longBreakLength : settings.shortBreakLength;
+    const duration = computeDuration(settings, totalFocus);
     const hasTasks = tasks.length !== 0;
     const hasUncompletedTasks = tasks.some(task => !task.completed);
 
