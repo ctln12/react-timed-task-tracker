@@ -1,39 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { renderTime, playSound } from '../helper/countdown';
+import { renderTime } from '../helper/countdown';
+import useTimerCountDownState from '../hooks/useTimerCountDownState';
 
 function TimerCountDown({ duration, isFocusing, nextTask, editTask, toggleIsFocusing }) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [key, setKey] = useState(0);
-  const handleStartClick = () => {
-    setIsPlaying(!isPlaying);
-  }
-  const resetTimer = () => {
-    setKey(key + 1);
-    setIsPlaying(false);
-  }
-  const manageCurrentTask = () => {
-    if (isFocusing) {
-      nextTask.completedFocus += 1;
-    }
-    if (nextTask.nbFocus === nextTask.completedFocus) {
-      nextTask.completed = true;
-    }
-    editTask(nextTask);
-  }
-  const handleStopClick = () => {
-    resetTimer();
-  }
-  const handleSkipClick = () => {
-    toggleIsFocusing();
-    resetTimer();
-  }
-  const handleComplete = () => {
-    playSound();
-    manageCurrentTask();
-    toggleIsFocusing();
-    resetTimer();
-  }
+  const { key, isPlaying, handleStartClick, handleStopClick, handleSkipClick, handleComplete } = useTimerCountDownState(nextTask, isFocusing, toggleIsFocusing, editTask);
 
   return (
     <div className='TimerCountDown'>
