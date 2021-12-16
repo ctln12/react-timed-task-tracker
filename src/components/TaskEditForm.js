@@ -1,6 +1,6 @@
 import React from 'react';
-import { pluralize } from '../helper/pluralize';
 import useInputState from "../hooks/useInputState";
+import TaskFocusButtons from './TaskFocusButtons';
 
 const TaskEditForm = ({ task, editTask, toggleIsEditing, handlePlusClick, handleMinusClick }) => {
   const [taskName, handleTaskNameChange] = useInputState(task.name);
@@ -20,11 +20,7 @@ const TaskEditForm = ({ task, editTask, toggleIsEditing, handlePlusClick, handle
         onChange={handleTaskNameChange}
         autoFocus
       />
-      {/* This should be a component as in TimerCurrentTask */}
-      <button onClick={e => handlePlusClick(e, task)}>+</button>
-      <span>{pluralize(task.nbFocus, 'session')}</span>
-      <button disabled={disabled} onClick={e => handleMinusClick(e, task)}>-</button>
-      {/* End of component */}
+      <TaskFocusButtons task={task} disabled={disabled} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
       <input type='submit' value='Save' />
     </form>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { pluralize } from "../helper/pluralize";
 import useToggleState from '../hooks/useToggleState';
+import TaskFocusButtons from './TaskFocusButtons';
 import TaskEditForm from './TaskEditForm';
 
 function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, handleMinusClick }) {
@@ -14,11 +15,7 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, han
         :
         <p>{!isFocusing && 'Next up: '}{nextTask.name} <button onClick={() => toggleIsEditing()}>edit</button></p>
       }
-      {/* This should be a component as in TaskEditForm */}
-      <button onClick={e => handlePlusClick(e, nextTask)}>+</button>
-      <span>{pluralize(nextTask.nbFocus, 'session')}</span>
-      <button disabled={disabled} onClick={e => handleMinusClick(e, nextTask)}>-</button>
-      {/* End of component */}
+      <TaskFocusButtons task={nextTask} disabled={disabled} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
       <p>{!disabled && `${nextTask.completedFocus} / ${pluralize(nextTask.nbFocus, 'session')}`}</p>
     </div>
   );
