@@ -13,9 +13,9 @@ const useTimerCountDownState = (task, isFocusing, toggleIsFocusing, editTask) =>
   }
   const manageCurrentTask = () => {
     if (isFocusing) {
-      task.completedFocus += 1;
+      task.completed += 1;
     }
-    if (task.nbFocus === task.completedFocus) {
+    if (task.pomodoros === task.completed) {
       task.completed = true;
     }
     editTask(task);

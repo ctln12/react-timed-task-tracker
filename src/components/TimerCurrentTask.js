@@ -6,7 +6,7 @@ import TaskEditForm from './TaskEditForm';
 
 function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, handleMinusClick }) {
   const [isEditing, toggleIsEditing] = useToggleState(false);
-  const disabled = nextTask.nbFocus <= nextTask.completedFocus;
+  const disabled = nextTask.pomodoros <= nextTask.completed;
 
   return (
     <div className='TimerCurrentTask'>
@@ -16,7 +16,7 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, han
         <p>{!isFocusing && 'Next up: '}{nextTask.name} <button onClick={() => toggleIsEditing()}>edit</button></p>
       }
       <TaskFocusButtons task={nextTask} disabled={disabled} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
-      <p>{!disabled && `${nextTask.completedFocus} / ${pluralize(nextTask.nbFocus, 'session')}`}</p>
+      <p>{!disabled && `${nextTask.completed} / ${pluralize(nextTask.pomodoros, 'session')}`}</p>
     </div>
   );
 }

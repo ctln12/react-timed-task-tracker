@@ -1,5 +1,5 @@
 const countFocus = (tasks) => {
-  return tasks.map(task => task.completed ? task.nbFocus : task.completedFocus)
+  return tasks.map(task => task.done ? task.pomodoros : task.completed)
               .reduce((sum, item) => (sum + item), 0, 0);
 }
 

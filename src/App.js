@@ -5,34 +5,13 @@ import TaskList from './components/TaskList';
 import Settings from "./components/Settings";
 import Navbar from './components/Navbar';
 import { computeDuration, countFocus } from './helper/timer';
+import axios from 'axios';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: [
-        {
-          id: 1,
-          name: 'Do yoga',
-          completed: false,
-          nbFocus: 1,
-          completedFocus: 0,
-        },
-          {
-          id: 2,
-          name: 'Meditate',
-          completed: false,
-          nbFocus: 2,
-          completedFocus: 0,
-        },
-          {
-          id: 3,
-          name: 'Build first project',
-          completed: false,
-          nbFocus: 2,
-          completedFocus: 0,
-        },
-      ],
+      tasks: [],
       settings: {
         focusLength: 25,
         shortBreakLength: 5,
@@ -51,6 +30,16 @@ class App extends Component {
     this.toggleIsFocusing = this.toggleIsFocusing.bind(this);
     this.handlePlusClick = this.handlePlusClick.bind(this);
     this.handleMinusClick = this.handleMinusClick.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
+         .then(response => {
+           this.setState(prevState => ({
+             ...prevState,
+             tasks: response.data
+           }))
+         })
   }
 
   changeSettings(option) {
@@ -82,7 +71,7 @@ class App extends Component {
     const nextId = this.state.tasks[this.state.tasks.length - 1].id + 1;
     this.setState(prevState => ({
       ...prevState,
-      tasks: [...prevState.tasks, { id: nextId, name: newTaskName, completed: false, nbFocus: 0, completedFocus: 0 }]
+      tasks: [...prevState.tasks, { id: nextId, name: newTaskName, done: false, pomodoros: 0, completed: 0 }]
     }))
     this.changeNewTask('');
   }
@@ -114,28 +103,28 @@ class App extends Component {
   }
 
   handlePlusClick(e, task) {
-    task.nbFocus += 1;
-    task.completed = task.nbFocus === task.completedFocus && task.nbFocus !== 0;
+    task.pomodoros += 1;
+    task.done = task.pomodoros === task.completed && task.pomodoros !== 0;
     this.editTask(task);
     e.preventDefault();
   }
 
   handleMinusClick(e, task) {
-    task.nbFocus -= 1;
-    task.completed = task.nbFocus === task.completedFocus && task.nbFocus !== 0;
+    task.pomodoros -= 1;
+    task.done = task.pomodoros === task.completed && task.pomodoros !== 0;
     this.editTask(task);
-    task.completed && alert(`${task.name} - ${task.completedFocus} / ${task.nbFocus} - Completed!`);
+    task.done && alert(`${task.name} - ${task.completed} / ${task.pomodoros} - Completed!`);
     e.preventDefault();
   }
 
   render() {
     const { tasks, settings, newTaskName } = this.state;
-    const nextTask = tasks.find(task => !task.completed);
+    const nextTask = tasks.find(task => !task.done);
     const totalFocus = countFocus(tasks);
     console.log('Total focus session number: ' + totalFocus);
     const duration = computeDuration(settings, totalFocus);
     const hasTasks = tasks.length !== 0;
-    const hasUncompletedTasks = tasks.some(task => !task.completed);
+    const hasUncompletedTasks = tasks.some(task => !task.done);
 
     return (
       <div className='App'>
