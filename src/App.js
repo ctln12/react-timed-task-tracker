@@ -99,11 +99,18 @@ class App extends Component {
   }
 
   deleteTask(task_id) {
-    const updatedTasks = this.state.tasks.filter(task => task.id !== task_id);
-    this.setState(prevState => ({
-      ...prevState,
-      tasks: updatedTasks
-    }))
+    axios.delete(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks/${task_id}`)
+    // axios.delete(`http://localhost:3000/api/v1/tasks/${task_id}`)
+         .then(_response => {
+          axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
+          // axios.get('http://localhost:3000/api/v1/tasks')
+               .then(response => {
+                 this.setState(prevState => ({
+                   ...prevState,
+                   tasks: response.data
+                 }))
+               })
+         })
   }
 
   toggleIsFocusing() {
