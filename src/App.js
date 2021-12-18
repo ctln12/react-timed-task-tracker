@@ -84,11 +84,18 @@ class App extends Component {
   }
 
   editTask(updatedTask) {
-    const updatedTasks = this.state.tasks.map(task => task.id === updatedTask.id ? updatedTask : task);
-    this.setState(prevState => ({
-      ...prevState,
-      tasks: updatedTasks
-    }))
+    axios.patch(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks/${updatedTask.id}`,
+    // axios.patch(`http://localhost:3000/api/v1/tasks/${updatedTask.id}`,
+    {
+      task: updatedTask
+    })
+    .then(response => {
+      const updatedTasks = this.state.tasks.map(task => task.id === response.data.id ? response.data : task);
+      this.setState(prevState => ({
+        ...prevState,
+        tasks: updatedTasks
+      }))
+    })
   }
 
   deleteTask(task_id) {
