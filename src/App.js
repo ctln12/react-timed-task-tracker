@@ -34,6 +34,7 @@ class App extends Component {
 
   componentDidMount() {
     axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
+    // axios.get('http://localhost:3000/api/v1/tasks')
          .then(response => {
            this.setState(prevState => ({
              ...prevState,
@@ -68,11 +69,17 @@ class App extends Component {
   }
 
   addTask(newTaskName) {
-    const nextId = this.state.tasks[this.state.tasks.length - 1].id + 1;
+    axios.post('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks',
+    // axios.post('http://localhost:3000/api/v1/tasks',
+      {
+        name: newTaskName,
+      })
+    .then(response => {
     this.setState(prevState => ({
-      ...prevState,
-      tasks: [...prevState.tasks, { id: nextId, name: newTaskName, done: false, pomodoros: 0, completed: 0 }]
-    }))
+        ...prevState,
+        tasks: [...prevState.tasks, response.data]
+      }))
+    })
     this.changeNewTask('');
   }
 
