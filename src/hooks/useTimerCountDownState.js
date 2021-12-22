@@ -12,13 +12,13 @@ const useTimerCountDownState = (task, isFocusing, toggleIsFocusing, editTask) =>
     setIsPlaying(false);
   }
   const manageCurrentTask = () => {
-    if (isFocusing) {
+    if (task && isFocusing) {
       task.completed += 1;
     }
-    if (task.pomodoros === task.completed) {
+    if (task && task.pomodoros === task.completed) {
       task.done = true;
     }
-    editTask(task);
+    task && editTask(task);
   }
   const handleStopClick = () => {
     resetTimer();
