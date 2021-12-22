@@ -27,16 +27,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
-    axios.get('http://localhost:3000/api/v1/tasks')
+    axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
+    // axios.get('http://localhost:3000/api/v1/tasks')
          .then(response => {
            this.setState(prevState => ({
              ...prevState,
              tasks: response.data
            }))
          })
-    // axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/current')
-    axios.get('http://localhost:3000/api/v1/sessions/current')
+    axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/current')
+    // axios.get('http://localhost:3000/api/v1/sessions/current')
          .then(response => {
            this.setState(prevState => ({
              ...prevState,
@@ -68,8 +68,8 @@ class App extends Component {
   saveSettings() {
     // Call to API for persistence
     const session_id = this.state.settings.session_id;
-    // axios.patch(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/${session_id}`,
-    axios.patch(`http://localhost:3000/api/v1/sessions/${session_id}`,
+    axios.patch(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/${session_id}`,
+    // axios.patch(`http://localhost:3000/api/v1/sessions/${session_id}`,
       {
         focus_length: this.state.settings.focusLength,
         short_break_length: this.state.settings.shortBreakLength,
