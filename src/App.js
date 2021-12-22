@@ -12,13 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [],
-      settings: {
-        focusLength: 25,
-        shortBreakLength: 5,
-        longBreakLength: 15,
-        longBreakAfter: 4,
-        isFocusing: true
-      },
+      settings: {},
       newTaskName: ''
     }
     this.changeSettings = this.changeSettings.bind(this);
@@ -33,12 +27,26 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
-    // axios.get('http://localhost:3000/api/v1/tasks')
+    // axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/tasks')
+    axios.get('http://localhost:3000/api/v1/tasks')
          .then(response => {
            this.setState(prevState => ({
              ...prevState,
              tasks: response.data
+           }))
+         })
+    // axios.get(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/3`)
+    axios.get(`http://localhost:3000/api/v1/sessions/1`)
+         .then(response => {
+           this.setState(prevState => ({
+             ...prevState,
+             settings: {
+               focusLength: response.data.settings.focus_length,
+               shortBreakLength: response.data.settings.short_break_length,
+               longBreakLength: response.data.settings.long_break_length,
+               longBreakAfter: response.data.settings.long_break_after,
+               isFocusing: true
+             },
            }))
          })
   }
