@@ -1,10 +1,14 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { createSelectOptions } from "../helper/dropdown";
 
-function Settings({ settings, changeSettings, saveSettings }) {
+function Settings({settings, changeSettings, saveSettings }) {
+  let history = useHistory();
+
   const handleSubmit = (e) => {
     saveSettings();
     e.preventDefault();
+    history.push('/');
   }
 
   const handleSelectChange = (e) => {

@@ -35,12 +35,13 @@ class App extends Component {
              tasks: response.data
            }))
          })
-    // axios.get(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/3`)
-    axios.get(`http://localhost:3000/api/v1/sessions/1`)
+    // axios.get('https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/current')
+    axios.get('http://localhost:3000/api/v1/sessions/current')
          .then(response => {
            this.setState(prevState => ({
              ...prevState,
              settings: {
+               session_id: response.data.id,
                focusLength: response.data.settings.focus_length,
                shortBreakLength: response.data.settings.short_break_length,
                longBreakLength: response.data.settings.long_break_length,
@@ -66,7 +67,29 @@ class App extends Component {
 
   saveSettings() {
     // Call to API for persistence
-    alert(`Settings saved!`);
+    const session_id = this.state.settings.session_id;
+    // axios.patch(`https://rails-timed-task-tracker-api.herokuapp.com/api/v1/sessions/${session_id}`,
+    axios.patch(`http://localhost:3000/api/v1/sessions/${session_id}`,
+      {
+        focus_length: this.state.settings.focusLength,
+        short_break_length: this.state.settings.shortBreakLength,
+        long_break_length: this.state.settings.longBreakLength,
+        long_break_after: this.state.settings.longBreakAfter
+        // is_focusing: this.state.settings.isFocusing
+      })
+    .then(response => {
+      this.setState(prevState => ({
+        ...prevState,
+        settings: {
+          session_id: response.data.id,
+          focusLength: response.data.settings.focus_length,
+          shortBreakLength: response.data.settings.short_break_length,
+          longBreakLength: response.data.settings.long_break_length,
+          longBreakAfter: response.data.settings.long_break_after,
+          isFocusing: true
+        },
+      }))
+    })
   }
 
   changeNewTask(name) {
@@ -151,7 +174,7 @@ class App extends Component {
     const nextTask = tasks.find(task => !task.done);
     const totalFocus = countFocus(tasks);
     console.log('Total focus session number: ' + totalFocus);
-    const duration = computeDuration(settings, totalFocus);
+    const duration = computeDuration(settings, totalFocus) || 25;
     const hasTasks = tasks.length !== 0;
     const hasUncompletedTasks = tasks.some(task => !task.done);
 
