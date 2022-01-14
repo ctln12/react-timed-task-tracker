@@ -1,13 +1,42 @@
+import { Menu, Settings } from '@mui/icons-material';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className='Navbar'>
-      <NavLink exact activeClassName='active-link' to='/'>Timer</NavLink> |
-      <NavLink exact activeClassName='active-link' to='/tasks'>Tasks</NavLink> |
-      <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
-    </nav>
+    <Box sx={{ flexGrow: 1, mt: 4 }}>
+      <AppBar position="static" color="transparent" sx={{ boxShadow: 0 }}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Timer
+          </Typography>
+          <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="settings"
+            sx={{ ml: 2 }}
+          >
+            <Settings />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    // <nav className='Navbar'>
+    //   <NavLink exact activeClassName='active-link' to='/'>Timer</NavLink> |
+    //   <NavLink exact activeClassName='active-link' to='/tasks'>Tasks</NavLink> |
+    //   <NavLink exact activeClassName='active-link' to='/settings'>Settings</NavLink>
+    // </nav>
   );
 }
 
