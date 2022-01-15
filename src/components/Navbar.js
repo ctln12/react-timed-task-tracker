@@ -10,7 +10,7 @@ function Navbar() {
   const location = useLocation();
 
   return (
-    <div>
+    <>
       <Box sx={{ flexGrow: 1, mt: 4 }}>
         <AppBar position="static" color='inherit' sx={{ boxShadow: 0 }}>
           <Toolbar>
@@ -42,7 +42,7 @@ function Navbar() {
         </AppBar>
       </Box>
       <MenuList open={open} setOpen={setOpen} menuItems={menuItems} />
-    </div>
+    </>
   );
 }
 
