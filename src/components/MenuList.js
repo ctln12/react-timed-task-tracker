@@ -1,74 +1,64 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { IconButton, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { Close, FormatListBulleted, Settings, Timer } from '@material-ui/icons';
+import { styled, useTheme } from '@mui/material/styles';
+import { Box, Drawer, IconButton, List, ListItemButton, ListItemText } from '@mui/material';
+import { Close } from '@mui/icons-material';
 
-const menu = [
-  {
-    icon: <Timer />,
-    text: 'Timer',
-    path: '/',
-  },
-  {
-    icon: <FormatListBulleted />,
-    text: 'All Tasks',
-    path: '/tasks',
-  },{
-    icon: <Settings />,
-    text: 'Settings',
-    path: '/settings',
-  },
-]
-
-const useStyles = makeStyles((theme) => ({
-  list: {
-    width: '250px',
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
-  },
-  menuLink: {
-    textDecoration: 'none',
-    color: 'inherit',
-  },
-  item: {
-    padding: theme.spacing(1, 4),
-  },
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
 }));
 
-function MenuList({toggleDrawer}) {
-  const classes = useStyles();
+function MenuList({open, setOpen, menuItems}) {
+  const theme = useTheme();
 
-  return (
-    <div className={classes.list}>
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={toggleDrawer(false)}>
-          <Close />
-        </IconButton>
-      </div>
-      <List>
-        {menu.map((item) => (
-          <Link
-            key={item.text}
-            to={item.path}
-            onClick={toggleDrawer(false)}
-            className={classes.menuLink}
-          >
-            <ListItem button key={item.text} className={classes.item}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </div>
-  );
+  return(
+    <>
+      <Drawer
+        anchor='left'
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{
+          width: '100%',
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            padding: theme.spacing(0, 1),
+            width: '100%',
+            boxSizing: 'border-box',
+            border: 'none',
+          },
+        }}
+      >
+        <Box
+          role="presentation"
+          onClick={() => setOpen(false)}
+          onKeyDown={() => setOpen(false)}
+        >
+          <DrawerHeader>
+            <IconButton onClick={() => setOpen(false)}>
+              <Close />
+            </IconButton>
+          </DrawerHeader>
+          <List>
+            {menuItems.map((item) => (
+              <ListItemButton
+                key={item.text}
+                component={Link}
+                to={item.path}
+                sx={{ borderRadius: '3px' }}
+                selected={window.location.pathname === item.path}
+              >
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+    </>
+  )
 }
 
 export default MenuList;
