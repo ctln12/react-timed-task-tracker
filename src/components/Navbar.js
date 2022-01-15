@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import { Menu, Settings } from '@mui/icons-material';
 import MenuList from './MenuList';
@@ -7,6 +7,7 @@ import { menuItems } from '../helper/menuItems';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <div>
@@ -24,7 +25,7 @@ function Navbar() {
               <Menu />
             </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {menuItems.find(item => window.location.pathname === item.path).text}
+              {menuItems.find(item => location.pathname === item.path).text}
             </Typography>
             <IconButton
               size="large"
