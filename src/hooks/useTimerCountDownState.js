@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { playSound } from '../helper/countdown';
 
 const useTimerCountDownState = (isPlaying, setIsPlaying, task, isFocusing, toggleIsFocusing, editTask) => {
-  // const [isPlaying, setIsPlaying] = useState(false);
   const [key, setKey] = useState(0);
   const handleStartClick = () => {
     setIsPlaying(!isPlaying);
@@ -36,7 +35,6 @@ const useTimerCountDownState = (isPlaying, setIsPlaying, task, isFocusing, toggl
 
   return {
     key,
-    // isPlaying,
     handleStartClick,
     handleStopClick,
     handleSkipClick,
