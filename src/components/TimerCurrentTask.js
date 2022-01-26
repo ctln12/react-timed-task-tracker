@@ -1,7 +1,7 @@
 import React from 'react';
 import useToggleState from '../hooks/useToggleState';
 import TaskFocusButtons from './TaskFocusButtons';
-import TaskEditForm from './TaskEditForm';
+import TaskEditNameForm from './TaskEditNameForm';
 import { Box, IconButton, Typography } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 
@@ -12,12 +12,15 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, han
   return (
     <div className='TimerCurrentTask'>
       {isEditing ?
-        <TaskEditForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} disabled={disabled} />
+        <TaskEditNameForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} />
         :
-        <Box marginY={'1rem'} sx={{display: 'flex', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap'}}>
+        <Box
+          marginY={'1rem'}
+          sx={{display: 'flex', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap'}}
+        >
           <Typography variant='h6' component='span'>{!isFocusing && 'Next:'}</Typography>
-          <Typography variant="h6" marginX={'0.5rem'} component='span'>{nextTask.name}</Typography>
-          <IconButton aria-label="edit" size="small" onClick={() => toggleIsEditing()}>
+          <Typography variant='h6' marginX={'0.5rem'} component='span'>{nextTask.name}</Typography>
+          <IconButton aria-label='edit' size='small' onClick={() => toggleIsEditing()}>
             <EditOutlined fontSize='small' />
           </IconButton>
         </Box>
