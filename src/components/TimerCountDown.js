@@ -4,8 +4,8 @@ import { renderTime } from '../helper/countdown';
 import useTimerCountDownState from '../hooks/useTimerCountDownState';
 import { Box, Button, Stack } from '@mui/material';
 
-function TimerCountDown({ duration, isFocusing, nextTask, editTask, toggleIsFocusing }) {
-  const { key, isPlaying, handleStartClick, handleStopClick, handleSkipClick, handleComplete } = useTimerCountDownState(nextTask, isFocusing, toggleIsFocusing, editTask);
+function TimerCountDown({ duration, isFocusing, nextTask, editTask, toggleIsFocusing, isPlaying, setIsPlaying }) {
+  const { key, handleStartClick, handleStopClick, handleSkipClick, handleComplete } = useTimerCountDownState(isPlaying, setIsPlaying, nextTask, isFocusing, toggleIsFocusing, editTask);
 
   return (
     <Box className='TimerCountDown' style={{flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>

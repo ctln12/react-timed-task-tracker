@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TimerCountDown from './TimerCountDown';
 import TimerHeader from './TimerHeader';
 import { Container } from '@mui/material';
 
 function Timer({ nextTask, duration, editTask, isFocusing, toggleIsFocusing, hasTasks, hasUncompletedTasks, handlePlusClick, handleMinusClick }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
-    // <div className='Timer' style={{minHeight: 'calc(100vh - 110px)', backgroundColor: 'blue', display: 'flex', flexDirection: 'column'}}>
     <Container maxWidth="sm" sx={{minHeight: 'calc(100vh - 90px)', display: 'flex', flexDirection: 'column'}}>
       <TimerHeader
         nextTask={nextTask}
@@ -15,6 +16,7 @@ function Timer({ nextTask, duration, editTask, isFocusing, toggleIsFocusing, has
         hasUncompletedTasks={hasUncompletedTasks}
         handlePlusClick={handlePlusClick}
         handleMinusClick={handleMinusClick}
+        isPlaying={isPlaying}
       />
       <TimerCountDown
         duration={duration}
@@ -22,9 +24,10 @@ function Timer({ nextTask, duration, editTask, isFocusing, toggleIsFocusing, has
         nextTask={nextTask}
         editTask={editTask}
         toggleIsFocusing={toggleIsFocusing}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
       />
     </Container>
-    //</div>
   );
 }
 
