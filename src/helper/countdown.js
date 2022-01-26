@@ -1,3 +1,5 @@
+import { Typography } from "@mui/material";
+
 const children = ({ remainingTime }) => {
   let minutes = Math.floor(remainingTime / 60);
   let seconds = remainingTime % 60;
@@ -12,7 +14,7 @@ const children = ({ remainingTime }) => {
 
 const renderTime = ({ remainingTime }) => {
   return (
-    <span>{children({ remainingTime })}</span>
+    <Typography variant="h4">{children({ remainingTime })}</Typography>
   );
 }
 

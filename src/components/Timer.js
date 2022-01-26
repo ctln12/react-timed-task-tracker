@@ -1,14 +1,30 @@
 import React from 'react';
 import TimerCountDown from './TimerCountDown';
 import TimerHeader from './TimerHeader';
+import { Container } from '@mui/material';
 
 function Timer({ nextTask, duration, editTask, isFocusing, toggleIsFocusing, hasTasks, hasUncompletedTasks, handlePlusClick, handleMinusClick }) {
   return (
-    <div className='Timer'>
-      <h1>Timer</h1>
-      <TimerHeader nextTask={nextTask} editTask={editTask} isFocusing={isFocusing} hasTasks={hasTasks} hasUncompletedTasks={hasUncompletedTasks} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
-      <TimerCountDown duration={duration} isFocusing={isFocusing} nextTask={nextTask} editTask={editTask} toggleIsFocusing={toggleIsFocusing} />
-    </div>
+    // <div className='Timer' style={{minHeight: 'calc(100vh - 110px)', backgroundColor: 'blue', display: 'flex', flexDirection: 'column'}}>
+    <Container maxWidth="sm" sx={{minHeight: 'calc(100vh - 90px)', display: 'flex', flexDirection: 'column'}}>
+      <TimerHeader
+        nextTask={nextTask}
+        editTask={editTask}
+        isFocusing={isFocusing}
+        hasTasks={hasTasks}
+        hasUncompletedTasks={hasUncompletedTasks}
+        handlePlusClick={handlePlusClick}
+        handleMinusClick={handleMinusClick}
+      />
+      <TimerCountDown
+        duration={duration}
+        isFocusing={isFocusing}
+        nextTask={nextTask}
+        editTask={editTask}
+        toggleIsFocusing={toggleIsFocusing}
+      />
+    </Container>
+    //</div>
   );
 }
 

@@ -1,8 +1,9 @@
 import React from 'react';
-import { pluralize } from "../helper/pluralize";
 import useToggleState from '../hooks/useToggleState';
 import TaskFocusButtons from './TaskFocusButtons';
 import TaskEditForm from './TaskEditForm';
+import { Box, IconButton, Typography } from '@mui/material';
+import { EditOutlined } from '@mui/icons-material';
 
 function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, handleMinusClick }) {
   const [isEditing, toggleIsEditing] = useToggleState(false);
@@ -13,10 +14,15 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, han
       {isEditing ?
         <TaskEditForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} disabled={disabled} />
         :
-        <p>{!isFocusing && 'Next up: '}{nextTask.name} <button onClick={() => toggleIsEditing()}>edit</button></p>
+        <Box marginY={'1rem'} sx={{display: 'flex', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap'}}>
+          <Typography variant='h6' component='span'>{!isFocusing && 'Next:'}</Typography>
+          <Typography variant="h6" marginX={'0.5rem'} component='span'>{nextTask.name}</Typography>
+          <IconButton aria-label="edit" size="small" onClick={() => toggleIsEditing()}>
+            <EditOutlined fontSize='small' />
+          </IconButton>
+        </Box>
       }
       <TaskFocusButtons task={nextTask} disabled={disabled} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
-      <p>{!disabled && `${nextTask.completed} / ${pluralize(nextTask.pomodoros, 'session')}`}</p>
     </div>
   );
 }
