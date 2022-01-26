@@ -12,7 +12,12 @@ class App extends Component {
     super(props);
     this.state = {
       tasks: [],
-      settings: {},
+      settings: {
+        focusLength: '',
+        shortBreakLength: '',
+        longBreakLength: '',
+        longBreakAfter: ''
+      },
       newTaskName: ''
     }
     this.changeSettings = this.changeSettings.bind(this);
