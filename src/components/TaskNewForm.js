@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, IconButton, TextField } from '@mui/material';
+import { Box, IconButton, TextField } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
 function TaskNewForm ({ newTaskName, changeNewTask, addTask }) {
@@ -13,45 +13,38 @@ function TaskNewForm ({ newTaskName, changeNewTask, addTask }) {
   }
 
   return (
-    <Container
-      maxWidth='sm'
+    <Box
+      component='form'
+      onSubmit={handleSubmit}
+      sx={{
+        display: 'flex',
+        paddingY: 1,
+        paddingX: 2,
+      }}
     >
-      <Box
-        component='form'
+      <TextField
+        id='new-task-name'
+        variant='standard'
+        label='Add a new task'
+        placeholder='Do homework'
+        autoFocus
+        value={newTaskName}
+        onChange={handleChange}
         sx={{
-          display: 'flex',
-          alignItems: 'baseline',
-          marginX: 'auto',
-          paddingLeft: 2,
+          flexGrow: 1,
+          marginRight: 1,
         }}
-        noValidate
-        autoComplete='off'
-        onSubmit={handleSubmit}
+      />
+      <IconButton
+        type='submit'
+        sx={{
+          padding: 0.5,
+          alignSelf: 'flex-end',
+        }}
       >
-        <TextField
-          id='new-task-name'
-          variant='standard'
-          label='Add a new task'
-          placeholder='Do homework'
-          autoFocus
-          value={newTaskName}
-          onChange={handleChange}
-          sx={{
-            flexGrow: 1,
-            marginRight: 1,
-          }}
-        />
-        <IconButton
-          type='submit'
-          sx={{
-            padding: 0.5,
-            alignSelf: 'flex-end',
-          }}
-        >
-          <Add />
-        </IconButton>
-      </Box>
-    </Container>
+        <Add />
+      </IconButton>
+    </Box>
   );
 }
 

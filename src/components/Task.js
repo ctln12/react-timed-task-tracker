@@ -2,7 +2,7 @@ import React from 'react';
 import TaskEditForm from './TaskEditForm';
 import useToggleState from "../hooks/useToggleState";
 import { pluralize } from '../helper/pluralize';
-import { Checkbox, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Checkbox, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 
 function Task({ task, editTask, deleteTask, handlePlusClick, handleMinusClick }) {
@@ -23,23 +23,41 @@ function Task({ task, editTask, deleteTask, handlePlusClick, handleMinusClick })
   return (
     <>
       { isEditing ?
-        <TaskEditForm key={task.id} task={task} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} disabled={disabled} />
-        :
+        <TaskEditForm
+          key={task.id}
+          task={task}
+          editTask={editTask}
+          toggleIsEditing={toggleIsEditing}
+          handlePlusClick={handlePlusClick}
+          handleMinusClick={handleMinusClick}
+          disabled={disabled}
+        />
+      :
         <ListItem
           key={task.id}
           secondaryAction={
-            <div>
-              <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
+            <Box>
+              <IconButton
+                aria-label='edit'
+                size='small'
+                onClick={handleEditClick}
+              >
                 <EditOutlined fontSize='small' />
               </IconButton>
-              <IconButton aria-label='delete' size='small' onClick={handleDeleteClick}>
+              <IconButton
+                aria-label='delete'
+                size='small'
+                onClick={handleDeleteClick}
+              >
                 <DeleteOutlined fontSize='small' />
               </IconButton>
-            </div>
+            </Box>
           }
-          sx={{paddingY: 1, paddingX: 2}}
+          disablePadding
         >
-          <ListItemButton onChange={handleCheckboxChange}>
+          <ListItemButton
+            onChange={handleCheckboxChange}
+          >
             <ListItemIcon>
               <Checkbox
                 edge='start'
