@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { createSelectOptions } from '../helper/dropdown';
 import { Box, Button, Container, FormControl, InputLabel, Select } from '@mui/material';
-import { Save } from '@mui/icons-material';
+import { Check } from '@mui/icons-material';
 
 const MenuProps = {
   PaperProps: {
@@ -29,8 +29,17 @@ function Settings({settings, changeSettings, saveSettings }) {
   const sessionOptions = createSelectOptions(120, 'session');
 
   return (
-    <Container className='Settings' maxWidth='sm'>
-      <Box component='form' sx={{ minWidth: 120 }} onSubmit={handleSubmit}>
+    <Container
+      maxWidth='sm'
+    >
+      <Box
+      component='form'
+      onSubmit={handleSubmit}
+      sx={{
+        paddingY: 1,
+        paddingX: 2,
+      }}
+      >
         <FormControl margin='normal' fullWidth>
           <InputLabel id='focus-label'>Focus length</InputLabel>
           <Select
@@ -91,9 +100,8 @@ function Settings({settings, changeSettings, saveSettings }) {
         <Button
           type='submit'
           variant='contained'
-          color='inherit'
           fullWidth
-          startIcon={<Save size='large' variant='text' />}
+          startIcon={<Check size='large' />}
           sx={{marginTop: '1rem'}}
         >Save</Button>
       </Box>
