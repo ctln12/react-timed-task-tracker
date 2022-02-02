@@ -1,16 +1,22 @@
 import React from 'react';
 import TaskNewForm from './TaskNewForm';
 import Task from './Task';
+import { Container, List } from '@mui/material';
 
-const TaskList = ({ tasks, newTaskName, changeNewTask, addTask, editTask, deleteTask, handlePlusClick, handleMinusClick }) => {
+function TaskList ({ tasks, newTaskName, changeNewTask, addTask, editTask, deleteTask, handlePlusClick, handleMinusClick }) {
   const taskList = tasks.map(task => (<Task key={task.id} task={task} editTask={editTask} deleteTask={deleteTask} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />));
 
   return (
-    <div className='TaskList'>
-      <h1>Tasks</h1>
+    <Container
+      maxWidth='sm'
+    >
       <TaskNewForm newTaskName={newTaskName} changeNewTask={changeNewTask} addTask={addTask} />
-      <ul>{ taskList }</ul>
-    </div>
+      <List
+        sx={{marginTop: 1}}
+      >
+        { taskList }
+      </List>
+    </Container>
   );
 }
 

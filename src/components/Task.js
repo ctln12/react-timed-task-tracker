@@ -2,8 +2,10 @@ import React from 'react';
 import TaskEditForm from './TaskEditForm';
 import useToggleState from "../hooks/useToggleState";
 import { pluralize } from '../helper/pluralize';
+import { Checkbox, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { DeleteOutlined, EditOutlined } from '@mui/icons-material';
 
-const Task = ({ task, editTask, deleteTask, handlePlusClick, handleMinusClick }) => {
+function Task({ task, editTask, deleteTask, handlePlusClick, handleMinusClick }) {
   const [isEditing, toggleIsEditing] = useToggleState(false);
   const disabled = task.pomodoros <= task.completed;
   const handleEditClick = () => {
@@ -23,9 +25,36 @@ const Task = ({ task, editTask, deleteTask, handlePlusClick, handleMinusClick })
       { isEditing ?
         <TaskEditForm key={task.id} task={task} editTask={editTask} toggleIsEditing={toggleIsEditing} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} disabled={disabled} />
         :
-        <li className='Task' key={task.id}>
-          <input type='checkbox' checked={task.done} value={task.done} onChange={handleCheckboxChange} /> {task.name} - {`${task.completed} / ${pluralize(task.pomodoros, 'session')}`} <button onClick={handleEditClick}>edit</button> <button onClick={handleDeleteClick}>delete</button>
-        </li>
+        <ListItem
+          key={task.id}
+          secondaryAction={
+            <div>
+              <IconButton aria-label='edit' size='small' onClick={handleEditClick}>
+                <EditOutlined fontSize='small' />
+              </IconButton>
+              <IconButton aria-label='delete' size='small' onClick={handleDeleteClick}>
+                <DeleteOutlined fontSize='small' />
+              </IconButton>
+            </div>
+          }
+          sx={{paddingY: 1, paddingX: 2}}
+        >
+          <ListItemButton onChange={handleCheckboxChange}>
+            <ListItemIcon>
+              <Checkbox
+                edge='start'
+                checked={task.done}
+                inputProps={{'aria-labelledby': task.id}}
+              />
+            </ListItemIcon>
+            <ListItemText
+              id={task.id}
+              secondary={`${task.completed} / ${pluralize(task.pomodoros, 'session')}`}
+            >
+              {task.name}
+            </ListItemText>
+          </ListItemButton>
+        </ListItem>
       }
     </>
   );
