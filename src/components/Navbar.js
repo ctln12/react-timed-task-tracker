@@ -1,71 +1,46 @@
 import React, { useState } from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Grid, IconButton, SwipeableDrawer, Toolbar, Typography } from '@material-ui/core';
-import { Menu, Settings } from '@material-ui/icons';
+import { Link, useLocation } from 'react-router-dom';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
+import { Menu, Settings } from '@mui/icons-material';
 import MenuList from './MenuList';
-import TodoList from './TodoList';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  settingsLink: {
-    color: 'inherit',
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import { menuItems } from '../helper/menuItems';
 
 function Navbar() {
-  const classes = useStyles();
-  const [state, setState] = useState(false);
-  const toggleDrawer = (open) => (event) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setState(open);
-  };
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="inherit" elevation={0}>
-        <Grid container justifyContent='center'>
-          <Grid item xs={11} sm={8} md={6} lg={4}>
-            <Toolbar>
-              <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)} className={classes.menuButton}>
-                <Menu />
-              </IconButton>
-              <SwipeableDrawer
-                anchor="left"
-                open={state}
-                onClose={toggleDrawer(false)}
-                onOpen={toggleDrawer(true)}
-              >
-                <MenuList toggleDrawer={toggleDrawer} />
-              </SwipeableDrawer>
-              <Typography variant="h6" className={classes.title}>
-                <Switch >
-                  <Route exact path="/" render={() => <h1>Timer</h1>} children={() => 'Timer'} />
-                  <Route exact path="/settings" render={() => <h1>Timer Settings</h1>} children={() => 'Settings'} />
-                  <Route exact path="/tasks" render={() => <TodoList />} children={() => 'All tasks'} />
-                </Switch>
-              </Typography>
-              <Link to="/settings" className={classes.settingsLink}>
-                <IconButton edge="end" aria-label="settings" color="inherit">
-                  <Settings />
-                </IconButton>
-              </Link>
-            </Toolbar>
-          </Grid>
-        </Grid>
+    <Box>
+      <AppBar position="static" sx={{ boxShadow: 0, flexGrow: 1, mb: 1, pt: 2, pb: 1, px: 2 }}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => setOpen(true)}
+            sx={{ mr: 2 }}
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {menuItems.find(item => location.pathname === item.path).text}
+          </Typography>
+          <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="settings"
+            sx={{ ml: 2 }}
+            component={Link}
+            to='/settings'
+          >
+            <Settings />
+          </IconButton>
+        </Toolbar>
       </AppBar>
-    </div>
+      <MenuList open={open} setOpen={setOpen} menuItems={menuItems} />
+    </Box>
   );
 }
 
