@@ -3,7 +3,7 @@ import { pluralize } from '../helper/pluralize';
 import { Box, IconButton, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 
-const TaskFocusButtons = ({ task, disabled, handlePlusClick, handleMinusClick }) => {
+function TaskFocusButtons({ task, disabled, handlePlusClick, handleMinusClick }) {
   return (
     <Box
       sx={{
