@@ -25,6 +25,7 @@ function TaskEditForm({ task, editTask, toggleIsEditing, handlePlusClick, handle
         label='Edit current task name'
         value={taskName}
         onChange={handleTaskNameChange}
+        autoComplete='off'
         fullWidth
         autoFocus
       />
