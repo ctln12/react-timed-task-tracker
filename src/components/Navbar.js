@@ -10,39 +10,37 @@ function Navbar() {
   const location = useLocation();
 
   return (
-    <div className='Navbar'>
-      <Box sx={{ flexGrow: 1, mt: 4 }}>
-        <AppBar position="static" color='inherit' sx={{ boxShadow: 0 }}>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={() => setOpen(true)}
-              sx={{ mr: 2 }}
-            >
-              <Menu />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {menuItems.find(item => location.pathname === item.path).text}
-            </Typography>
-            <IconButton
-              size="large"
-              edge="end"
-              color="inherit"
-              aria-label="settings"
-              sx={{ ml: 2 }}
-              component={Link}
-              to='/settings'
-            >
-              <Settings />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
+    <Box>
+      <AppBar position="static" sx={{ boxShadow: 0, flexGrow: 1, mb: 1, pt: 2, pb: 1, px: 2 }}>
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => setOpen(true)}
+            sx={{ mr: 2 }}
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {menuItems.find(item => location.pathname === item.path).text}
+          </Typography>
+          <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="settings"
+            sx={{ ml: 2 }}
+            component={Link}
+            to='/settings'
+          >
+            <Settings />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
       <MenuList open={open} setOpen={setOpen} menuItems={menuItems} />
-    </div>
+    </Box>
   );
 }
 
