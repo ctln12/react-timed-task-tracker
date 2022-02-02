@@ -7,7 +7,14 @@ function Timer({ nextTask, duration, editTask, isFocusing, toggleIsFocusing, has
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <Container maxWidth="sm" sx={{minHeight: 'calc(100vh - 90px)', display: 'flex', flexDirection: 'column'}}>
+    <Container
+      maxWidth="sm"
+      sx={{
+        minHeight: 'calc(100vh - 90px)',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <TimerHeader
         nextTask={nextTask}
         editTask={editTask}

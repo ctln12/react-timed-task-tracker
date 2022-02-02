@@ -27,9 +27,10 @@ function TaskNewForm ({ newTaskName, changeNewTask, addTask }) {
         variant='standard'
         label='Add a new task'
         placeholder='Do homework'
-        autoFocus
         value={newTaskName}
         onChange={handleChange}
+        autoComplete='off'
+        autoFocus
         sx={{
           flexGrow: 1,
           marginRight: 1,

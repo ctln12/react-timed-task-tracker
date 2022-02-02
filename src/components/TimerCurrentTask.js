@@ -1,7 +1,7 @@
 import React from 'react';
 import useToggleState from '../hooks/useToggleState';
 import TaskFocusButtons from './TaskFocusButtons';
-import TaskEditNameForm from './TaskEditNameForm';
+import TaskEditForm from './TaskEditForm';
 import { Box, IconButton, Typography } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 
@@ -10,23 +10,55 @@ function TimerCurrentTask({ nextTask, editTask, isFocusing, handlePlusClick, han
   const disabled = nextTask.pomodoros <= nextTask.completed;
 
   return (
-    <div className='TimerCurrentTask'>
-      {isEditing ?
-        <TaskEditNameForm task={nextTask} editTask={editTask} toggleIsEditing={toggleIsEditing} />
-        :
-        <Box
-          marginY={'1rem'}
-          sx={{display: 'flex', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap'}}
-        >
-          <Typography variant='h6' component='span'>{!isFocusing && 'Next:'}</Typography>
-          <Typography variant='h6' marginX={'0.5rem'} component='span'>{nextTask.name}</Typography>
-          <IconButton aria-label='edit' size='small' onClick={() => toggleIsEditing()}>
-            <EditOutlined fontSize='small' />
-          </IconButton>
+    <Box>
+      {
+      isEditing ?
+        <TaskEditForm
+          key={nextTask.id}
+          task={nextTask}
+          editTask={editTask}
+          toggleIsEditing={toggleIsEditing}
+          handlePlusClick={handlePlusClick}
+          handleMinusClick={handleMinusClick}
+          disabled={disabled}
+        />
+      :
+        <Box>
+          <Box
+            marginY={2}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'baseline',
+              flexWrap: 'wrap'
+            }}
+          >
+            <Typography variant='h6' component='span'>
+              {!isFocusing && 'Next:'}
+            </Typography>
+            <Typography variant='h6' component='span' marginX={1}>
+              {nextTask.name}
+            </Typography>
+            <IconButton
+              aria-label='edit'
+              size='small'
+              color='primary'
+              onClick={() => toggleIsEditing()}
+            >
+              <EditOutlined fontSize='small' />
+            </IconButton>
+          </Box>
+          <Box sx={{width: '50%', marginX: 'auto'}}>
+            <TaskFocusButtons
+              task={nextTask}
+              disabled={disabled}
+              handlePlusClick={handlePlusClick}
+              handleMinusClick={handleMinusClick}
+            />
+          </Box>
         </Box>
       }
-      <TaskFocusButtons task={nextTask} disabled={disabled} handlePlusClick={handlePlusClick} handleMinusClick={handleMinusClick} />
-    </div>
+    </Box>
   );
 }
 

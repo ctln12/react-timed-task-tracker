@@ -14,6 +14,7 @@ function TaskFocusButtons({ task, disabled, handlePlusClick, handleMinusClick })
       <IconButton
         aria-label="add"
         size="small"
+        color="primary"
         onClick={e => handlePlusClick(e, task)}
       >
         <AddCircleOutline fontSize='small' />
@@ -28,6 +29,7 @@ function TaskFocusButtons({ task, disabled, handlePlusClick, handleMinusClick })
       <IconButton
         aria-label="remove"
         size="small"
+        color="primary"
         onClick={e => handleMinusClick(e, task)}
         disabled={disabled}
       >

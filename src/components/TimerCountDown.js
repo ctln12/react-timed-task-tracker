@@ -8,25 +8,55 @@ function TimerCountDown({ duration, isFocusing, nextTask, editTask, toggleIsFocu
   const { key, handleStartClick, handleStopClick, handleSkipClick, handleComplete } = useTimerCountDownState(isPlaying, setIsPlaying, nextTask, isFocusing, toggleIsFocusing, editTask);
 
   return (
-    <Box className='TimerCountDown' style={{flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+      }}
+    >
       <CountdownCircleTimer
         key={key}
         duration={duration * 60}
         isPlaying={isPlaying}
         onComplete={handleComplete}
-        colors="#A5A5A5"
+        colors="#1976d2"
         size={240}
         strokeWidth={12}
         ariaLabel="count down timer"
       >
         {renderTime}
       </CountdownCircleTimer>
-      <Stack direction="row" spacing={2}>
-        <Button variant="contained" color="inherit" size='large' onClick={handleStartClick}>{isPlaying ? 'Pause' : 'Start'}</Button>
-        {isFocusing ?
-          <Button variant="contained" color="inherit" size='large' onClick={handleStopClick}>Stop</Button>
-          :
-          <Button variant="contained" color="inherit" size='large' onClick={handleSkipClick}>Skip</Button>
+      <Stack
+        direction="row"
+        spacing={2}
+      >
+        <Button
+          variant="contained"
+          size='large'
+          onClick={handleStartClick}
+        >
+          {isPlaying ? 'Pause' : 'Start'}
+        </Button>
+        {
+        isFocusing ?
+          <Button
+            variant="contained"
+            size='large'
+            onClick={handleStopClick}
+          >
+            Stop
+          </Button>
+        :
+          <Button
+            variant="contained"
+            size='large'
+            onClick={handleSkipClick}
+          >
+            Skip
+          </Button>
         }
       </Stack>
     </Box>
