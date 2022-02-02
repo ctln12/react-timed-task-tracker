@@ -5,13 +5,32 @@ import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 
 const TaskFocusButtons = ({ task, disabled, handlePlusClick, handleMinusClick }) => {
   return (
-    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <IconButton aria-label="add" size="small" onClick={e => handlePlusClick(e, task)}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center'
+      }}
+    >
+      <IconButton
+        aria-label="add"
+        size="small"
+        onClick={e => handlePlusClick(e, task)}
+      >
         <AddCircleOutline fontSize='small' />
       </IconButton>
-      <Typography variant='body' component="span" width={'120px'}>
+      <Typography
+        variant='body'
+        component="span"
+        width={'100%'}
+        textAlign='center'
+      >
         {!disabled && `${task.completed} / ${pluralize(task.pomodoros, 'session')}`}</Typography>
-      <IconButton disabled={disabled} aria-label="remove" size="small" onClick={e => handleMinusClick(e, task)}>
+      <IconButton
+        aria-label="remove"
+        size="small"
+        onClick={e => handleMinusClick(e, task)}
+        disabled={disabled}
+      >
         <RemoveCircleOutline fontSize='small' />
       </IconButton>
     </Box>
